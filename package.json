@@ -1,0 +1,27 @@
+{
+  "name": "github-diff-explorer",
+  "version": "0.1.0",
+  "description": "An injectable script which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket/Stash.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alexmdodge/github-diff-explorer.git"
+  },
+  "keywords": [
+    "github",
+    "bitbucket",
+    "diff-viewer",
+    "explorer",
+    "plugin",
+    "extension"
+  ],
+  "author": "Alex Dodge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexmdodge/github-diff-explorer/issues"
+  },
+  "homepage": "https://github.com/alexmdodge/github-diff-explorer#readme"
+}
