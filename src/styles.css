@@ -1,0 +1,9 @@
+.gcfe__container > * {
+    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    font-size: 12px;
+}
+
+.gcfe__item {
+    font-weight: bold;
+    color: #2cbe4e;
+}
