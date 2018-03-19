@@ -1,3 +1,101 @@
+var globalStyle = document.createElement('style');
+globalStyle.type='text/css';
+globalStyle.appendChild(document.createTextNode('' +
+  '.gcfe__container > * {' +
+    'font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;' +
+    'font-size: 12px;' +
+  '}'+
+  
+  '.gcfe__item {' +
+    'font-weight: bold;' +
+    'font-color: #2cbe4e;' +
+  '}'
+));
+document.getElementsByTagName('head')[0].appendChild(globalStyle);
+
+window.getChildNode = function(childData) {
+  var files = Object.keys(childData);
+  var filesContainer = document.createElement('ul');
+  filesContainer.style.paddingLeft = '10px';
+  filesContainer.style.listStyle = 'none';
+
+  files.forEach(file => {
+    var fileItem = document.createElement('li');
+
+    var currentFileData = childData[file];
+    if (!!currentFileData.explorerEl) {
+      fileItem.appendChild(currentFileData.explorerEl);
+    } else {
+      var itemDescriptor = document.createElement('span');
+      itemDescriptor.innerHTML = '&#9660; ' + file;
+      fileItem.appendChild(itemDescriptor);
+      fileItem.appendChild(getChildNode(currentFileData));
+    }
+    
+    filesContainer.appendChild(fileItem);
+  });
+  
+  return filesContainer;
+}
+
+setTimeout(function() {
+  window.diffContainerEls = [...document.querySelectorAll('.js-diff-progressive-container')];
+  diffContainerEls = diffContainerEls.map(el => {
+    return [...el.children];
+  });
+  
+  diffContainerEls = [].concat(...diffContainerEls);
+  diffContainerEls = diffContainerEls.filter(diff => diff.classList.contains('file'));
+  window.explorerData = diffContainerEls.map(diff => {
+    return {
+        path: diff.children[0].dataset.path,
+        elDiff: diff,
+    };
+  });
+  
+  // Modify the path to be a nested Object
+ explorerData = explorerData.map(file => {
+    var pathStruct = file.path.split('/');
+    pathStruct.reverse();
+    var explorerEl = document.createElement('span');
+    explorerEl.innerHTML = pathStruct[0];
+    explorerEl.classList.add('gcfe', 'gcfe__item');
+
+    return pathStruct.reduce((acc, path) => {
+      return {
+          [path]: acc
+      };
+    }, {
+      diffEl: file.elDiff,
+      explorerEl: explorerEl,
+    });
+  });
+  
+  window.allData = deepExtend({}, ...explorerData);
+
+  var explorerContainerEl = document.createElement('div');
+  explorerContainerEl.classList.add('gcfe', 'gcfe__container');
+  explorerContainerEl.style.backgroundColor = '#fafbfc';
+  explorerContainerEl.style.width = '32%';
+  explorerContainerEl.style.order = '-1';
+  explorerContainerEl.style.marginRight = '10px';
+  explorerContainerEl.style.border = '1px solid #e1e4e8';
+  explorerContainerEl.style.borderRadius = '2px';
+  explorerContainerEl.style.overflow = 'scroll';
+  
+  explorerContainerEl.appendChild(getChildNode(allData));
+  
+  var diffContainer = document.querySelector('.repository-content');
+  var issuesListContainer = document.querySelector('.issues-listing');
+  issuesListContainer.style.width = '64%';
+  diffContainer.appendChild(explorerContainerEl);
+  diffContainer.style.display = 'flex';
+  diffContainer.style.flexDirection = 'row';
+  diffContainer.style.justifyContent = 'center';
+  var contentContainerEl = document.querySelector('.new-discussion-timeline');
+  contentContainerEl.style.width = '100%';
+}, 1000);
+
 window.isSpecificValue = function(val) {
 	return (
 		val instanceof Date
@@ -111,39 +209,3 @@ window.deepExtend = function () {
 
 	return target;
 }
-
-setTimeout(function() {
-  window.diffContainerEls = [...document.querySelectorAll('.js-diff-progressive-container')];
-  diffContainerEls = diffContainerEls.map(el => {
-    return [...el.children];
-  });
-  
-  diffContainerEls = [].concat(...diffContainerEls);
-  diffContainerEls = diffContainerEls.filter(diff => diff.classList.contains('file'));
-  window.explorerData = diffContainerEls.map(diff => {
-    return {
-        path: diff.children[0].dataset.path,
-        elDiff: diff,
-    };
-  });
-  
-  // Modify the path to be a nested Object
- explorerData = explorerData.map(file => {
-    var pathStruct = file.path.split('/');
-    pathStruct.reverse();
-    var explorerEl = document.createElement('div');
-    explorerEl.classList.add('gcfe');
-    explorerEl.classList.add('gcfe__item');
-
-    return pathStruct.reduce((acc, path) => {
-      return {
-          [path]: acc
-      };
-    }, {
-      diffEl: file.elDiff,
-      explorerEl: document.createElement('div'),
-    });
-  });
-  
-  window.allData = deepExtend({}, ...explorerData);
-}, 1000);

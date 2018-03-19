@@ -4,7 +4,8 @@
   "description": "An injectable script which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket/Stash.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "uglifyjs index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/alexmdodge/github-diff-explorer#readme",
   "dependencies": {
     "deep-extend": "0.5.0",
-    "http-server": "0.11.1"
+    "http-server": "0.11.1",
+    "webpack": "4.1.1"
   }
 }
