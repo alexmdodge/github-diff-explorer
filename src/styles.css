@@ -1,9 +1,67 @@
-.gcfe__container > * {
-    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
-    font-size: 12px;
+.gcfe {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.gcfe__files {
+  width: 70%;
+}
+
+.gcfe__file {
+  display: none;
+}
+
+.gcfe__file--active {
+  display: block;
+}
+
+.gcfe__header {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding-left: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 43px;
+  font-weight: bold;
+  background-color: #FAFBFC;
+  width: 100%;
+  height: 43px;
+  border-bottom: 1px solid #e1e4e8;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.gcfe__container {
+  background-color: '#fafbfc';
+  width: 28%;
+  order: -1;
+  margin-right: 10px;
+  border: 1px solid #e1e4e8;
+  border-radius: 3px;
+  overflow-x: scroll;
+}
+
+.gcfe__nested-files {
+  padding-left: 10px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.gcfe__container>* {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
 }
 
 .gcfe__item {
-    font-weight: bold;
-    color: #2cbe4e;
+  cursor: pointer;
+  color: #4cce66;
+}
+
+.gcfe__item--active {
+  font-weight: bold;
+}
+
+.gcfe__item:hover {
+  color: #36BC53;
 }

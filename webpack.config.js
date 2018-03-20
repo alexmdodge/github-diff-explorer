@@ -1,10 +1,10 @@
 const path = require('path');
 const config = require('./project.config.js');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: config.paths.app,
-    vendor: config.paths.vendor,
+    'gdfe_script': config.paths.entry
   },
 
   output: {
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin("gdfe_styles.css"),
   ],
 
   resolve: {

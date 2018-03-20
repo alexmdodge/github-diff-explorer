@@ -2,8 +2,8 @@ const path = require('path');
 
 const config = {
   paths: {
-    app: path.resolve(__dirname, "src/index.js"),
-    output: path.resolve(__dirname, "lib"),
+    entry: path.resolve(__dirname, "src/script.js"),
+    output: path.resolve(__dirname, "extension/lib"),
   }
 }
 
