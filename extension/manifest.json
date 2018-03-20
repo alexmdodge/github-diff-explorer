@@ -1,0 +1,37 @@
+{
+    "manifest_version": 2,
+    "name": "__MSG_extName__",
+    "version": "0.1.0",
+    "default_locale": "en",
+    "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "16": "images/icon16.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
+        },
+        "default_title": "GitHub Diff Explorer",
+        "default_popup": "popup.html"
+    },
+    "author": "Alex Dodge",
+    "content_scripts": [
+        {
+            "matches": ["https://github.com/*/*/pull/*/files"],
+            "css": ["lib/gdfe_styles.css"],
+            "js": ["lib/gdfe_script.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "offline_enabled": true,
+    "permissions": [
+        "tabs",
+        "http://*.google.com/"
+    ],
+    "short_name": "GDE",
+    "version_name": "alpha"
+  }
