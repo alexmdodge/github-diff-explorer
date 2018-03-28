@@ -21,7 +21,7 @@
     "author": "Alex Dodge",
     "content_scripts": [
         {
-            "matches": ["https://github.com/*/*/pull/*/files"],
+            "matches": ["https://github.com/*/*/pull/*"],
             "css": ["lib/gdfe_styles.css"],
             "js": ["lib/gdfe_script.js"],
             "run_at": "document_end"

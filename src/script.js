@@ -1,14 +1,6 @@
 import './styles.css';
 import deepExtend from './modules/extend';
-import {
-  getChildNode,
-  getExplorerElement,
-  getExplorerHeaderElement,
-  removeElementChildren
-} from './modules/utils';
-
-console.log('GitHub Diff Explorer Loading . . .');
-console.log('Document content loaded');
+import DOMUtils from './modules/DOMUtils';
 
 window.activeFileEl = '';
 window.activeExplorerEl = '';
@@ -86,15 +78,15 @@ function setupExplorer() {
   const explorerData = deepExtend({}, ...data);
 
   // Build the nested file explorer using the normalized data tree
-  const explorerEl = getExplorerElement();
-  const explorerHeaderEl = getExplorerHeaderElement();
+  const explorerEl = DOMUtils.getExplorerElement();
+  const explorerHeaderEl = DOMUtils.getExplorerHeaderElement();
   explorerEl.appendChild(explorerHeaderEl);
-  explorerEl.appendChild(getChildNode(explorerData));
+  explorerEl.appendChild(DOMUtils.getChildNode(explorerData));
 
   // Prep the existing file container on the page
   const explorerContainerEl = document.querySelector(`.${explorerContainerClass}`);
   explorerContainerEl.classList.add('gcfe');
-  removeElementChildren(explorerContainerEl);
+  DOMUtils.removeElementChildren(explorerContainerEl);
 
   // Merged all the files into one container
   const fileContainerEl = document.createElement('div');
@@ -111,8 +103,33 @@ function setupExplorer() {
   explorerContainerEl.appendChild(fileContainerEl);
 
   // Ensure page is full width
-  var issuesListContainer = document.querySelector(`.${pageContainerClass}`);
+  const issuesListContainer = document.querySelector(`.${pageContainerClass}`);
   issuesListContainer.style.width = '95%';
 }
 
-setTimeout(setupExplorer, 1000);
+let currentHref = window.location.href;
+let prevHref = window.location.href;
+
+// Check if initially on the files changed and start build process
+const isValidLocation = DOMUtils.isValidHrefPath(currentHref);
+
+function poll() {
+  currentHref = window.location.href;
+  const isSameLocation = currentHref === prevHref;
+
+
+  if (!isSameLocation && isFilesChangedLocation) {
+    console.log('Ready to load diff viewer');
+
+    // Load for first time
+    // store variables
+    // When building check if state already present then simply
+    // re-attach everything
+  }
+  
+  prevHref = currentHref;
+  setTimeout(poll, 1000);
+}
+
+// initial call, or just call refresh directly
+setTimeout(poll, 1000);
