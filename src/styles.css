@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+.gcfe__page {
+  width: 95% !important;
+}
+
 .gcfe__files {
   width: 70%;
 }

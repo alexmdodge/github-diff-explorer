@@ -1,3 +1,13 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This is a forked version of the deepExtend library provided by,
+ * https://github.com/unclechu/node-deep-extend
+ * 
+ * Note this is modified under the MIT license.
+ * 
+ * Specifically the method was modified to terminate recursive dives whenever
+ * a HTMLElement is matched.
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 function isSpecificValue(val) {
   return (
       val instanceof Date ||
@@ -40,7 +50,7 @@ function deepCloneArray(arr) {
 }
 
 /**
-* Extening object that entered in first argument.
+* Extending object that entered in first argument.
 *
 * Returns extended object or false if have no target object or incorrect type.
 *
