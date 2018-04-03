@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "__MSG_extName__",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "default_locale": "en",
     "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
     "icons": {
@@ -33,5 +33,5 @@
         "http://*.google.com/"
     ],
     "short_name": "GitHub Diff Explorer",
-    "version_name": "1.0.0"
+    "version_name": "1.0.1"
   }
