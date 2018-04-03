@@ -1,17 +1,9 @@
-import { gh, classes } from './constants';
+import { gh } from './constants';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Functions for handling data parsing related to the structure of the
  * file explorer.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-/**
- * Adds necessary classes to the external page wrapper.
- */
-export function setupPageStructure() {
-  const issuesListContainer = document.querySelector(`.${gh.pageContainerClass}`);
-  issuesListContainer.classList.add(classes.pageContainer);
-}
 
 /**
  * Loops through an array of elements and creates a convenience

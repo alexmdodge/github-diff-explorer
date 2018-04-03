@@ -6,14 +6,21 @@ export const gh = {
   filesChangedId: 'files_tab_counter',
 }
 
-const prefix = 'gcfe';
-
 /* Extension specific classes */
 export const styleClass = {
-  pageContainer: `${prefix}__page`,
-  activeFile: `${prefix}__file--active`,
-  activeExplorer: `${prefix}__item--active`,
-  fileExplorerItem: (`${prefix}__item`),
-  fileDiffContainer: (`${prefix}__files`),
-  fileDiff: `${prefix}__file`,  
+  root: 'gde',
+  icon: 'gde__icon',
+  fileIcon: 'gde__file-icon',
+  caretIcon: 'gde__caret-icon',
+  pageContainer: 'gde__page',
+  activeFile: 'gde__file--active',
+  activeExplorer: 'gde__item--active',
+  explorerContainer: 'gde__container',
+  explorerHeader: 'gde__header',
+  explorerFolderHeader: 'gde__folder-header',
+  explorerItem: 'gde__item',
+  fileDiffContainer: 'gde__files',
+  fileDiff: 'gde__file',  
+  explorerFolderContainer: 'gde__nested-files',
+  closedFolder: 'gde__folder-closed'
 }

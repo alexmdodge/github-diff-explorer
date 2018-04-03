@@ -22,8 +22,8 @@
     "content_scripts": [
         {
             "matches": ["https://github.com/*/*/pull/*"],
-            "css": ["lib/gdfe_styles.css"],
-            "js": ["lib/gdfe_script.js"],
+            "css": ["lib/gde_styles.css"],
+            "js": ["lib/gde_script.js", "lib/gde_vendor.js"],
             "run_at": "document_end"
         }
     ],
@@ -32,6 +32,6 @@
         "tabs",
         "http://*.google.com/"
     ],
-    "short_name": "GDE",
+    "short_name": "GitHub Diff Explorer",
     "version_name": "alpha"
   }

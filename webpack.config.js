@@ -4,7 +4,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    'gdfe_script': config.paths.entry
+    'gde_script': config.paths.entry,
+    'gde_vendor': config.paths.vendor,
   },
 
   output: {
@@ -38,7 +39,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin("gdfe_styles.css"),
+    new ExtractTextPlugin("gde_styles.css"),
   ],
 
   resolve: {

@@ -1,6 +1,6 @@
 import { gh } from './constants';
 import { getFileElements } from './structure';
-import { isValidHrefPath, isUnifiedSplitSwitchPath } from './dom';
+import { isValidHrefPath, isUnifiedSplitSwitchPath } from './paths';
 import debug from './debug';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

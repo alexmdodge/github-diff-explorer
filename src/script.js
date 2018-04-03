@@ -1,7 +1,7 @@
 import Extension from './modules/extension';
 import './styles.css';
 
-const globals = window.GHFE_GLOBALS = {
+const globals = window.GDE_GLOBALS = {
   filesEls: null,
   activeFileEl: null,
   activeExplorerEl: null,
@@ -13,8 +13,8 @@ const globals = window.GHFE_GLOBALS = {
  * This extension uses a common abbreviation to represent the
  * extension's classes and other useful data properties.
  * 
- * GHFE - GitHub File Explorer
+ * GDE - GitHub Diff Explorer
  * 
  */
-const ghfeExtension = new Extension(globals);
-ghfeExtension.init();
+const gdeExtension = new Extension(globals);
+gdeExtension.init();

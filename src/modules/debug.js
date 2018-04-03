@@ -5,9 +5,9 @@ import { isDev } from './env';
  * environments.
  */
 const debug = {
-  log(msg, ...args) {
+  log(msg, args) {
     if (isDev) {
-      console.log(msg, ...args);
+      console.log(msg, args);
     }
   }
 }

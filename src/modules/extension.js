@@ -1,18 +1,18 @@
 import deepExtend from './extend';
 import { gh, styleClass } from './constants';
 import {
-  getChildNode,
+  generateExplorerFolderElements,
   getExplorerContainerElement,
   getExplorerHeaderElement,
   getExplorerItemElementWithName,
   getFilesContainerElement,
   addEachFileToContainer,
   prepareEmptyDiffViewerElement,
-  isValidHrefPath,
+  setupPageStructure
 } from './dom';
-import { getReversedPathFragments } from './paths';
+import { extractPathDataFromElements } from './structure';
+import { getReversedPathFragments, isValidHrefPath } from './paths';
 import { onContentReady, onFilesLoaded, onLocationChanged } from './handlers';
-import { setupPageStructure } from './structure';
 import debug from './debug';
 
 /**
@@ -63,16 +63,16 @@ export default class Extension {
   }
 
   buildFileExplorer() {
-    parseFileExplorerData();
-    
+    this.parseFileExplorerData();
+
     // The explorer element is the file explorer located
     // to the left of the viewer.
     const explorerContainerEl = getExplorerContainerElement();
     const explorerHeaderEl = getExplorerHeaderElement();
-    const nestedChildEl = getChildNode(this.explorerData);
+    const nestedFolderEl = generateExplorerFolderElements(this.explorerData);
 
     explorerContainerEl.appendChild(explorerHeaderEl);
-    explorerContainerEl.appendChild(nestedChildEl);
+    explorerContainerEl.appendChild(nestedFolderEl);
 
     // The diff viewer is the container which has both the file
     // explorer and the file diffs.
@@ -90,8 +90,12 @@ export default class Extension {
   }
 
   parseFileExplorerData() {
-    let pathData = extractPathDataFromElements(this.fileEls);
-    let pathDataSet = parseEachPathAsNestedObject(pathData);
+    const pathData = extractPathDataFromElements(this.fileEls);
+    debug.log('[parseFileExplorerData] Path data parsed: ', pathData);
+
+    const pathDataSet = this.parseEachPathAsNestedObject(pathData);
+    debug.log('[parseFileExplorerData] Path data nested as object: ', pathDataSet);
+
     this.explorerData = deepExtend({}, ...pathDataSet);
   }
 
@@ -126,8 +130,8 @@ export default class Extension {
   }
 
   setActiveFile(file) {
-    this.activeExplorerEl = file.explorerEl;
     this.activeFileEl = file.fileEl;
+    this.activeExplorerEl = file.explorerItemEl;
 
     this.activeFileEl.classList.add(styleClass.activeFile);
     this.activeExplorerEl.classList.add(styleClass.activeExplorer);
