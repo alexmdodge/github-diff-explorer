@@ -1,8 +1,9 @@
 # GitHub Diff Explorer
 A Chrome extension which replaces the current GitHub diff viewer with a file explorer similar to that of BitBucket and Stash.
 
-<img src="https://i.imgur.com/ySmeWTh.gif" width="900px">
+<img src="https://i.imgur.com/fRAFvijh.png" width="900px">
 
+### [See it in action](https://imgur.com/ySmeWTh)
 ## Features
 * Full width GitHub diff view
 * File explorer which allows quick selection between files relative to their actual location in the project directory
