@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   entry: {
     'gde_script': config.paths.entry,
-    'gde_vendor': config.paths.vendor,
   },
 
   output: {
