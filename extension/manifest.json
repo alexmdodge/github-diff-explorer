@@ -23,7 +23,7 @@
         {
             "matches": ["https://github.com/*/*/pull/*"],
             "css": ["lib/gde_styles.css"],
-            "js": ["lib/gde_script.js", "lib/gde_vendor.js"],
+            "js": ["lib/gde_script.js"],
             "run_at": "document_end"
         }
     ],
