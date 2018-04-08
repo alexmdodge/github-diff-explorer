@@ -1,15 +1,21 @@
+/* Vendor Imports */
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+/* Local Imports */
 const path = require('path');
 const config = require('./project.config.js');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    'gde_script': config.paths.entry,
+    [`${config.name.script}`]: config.paths.entry,
   },
 
   output: {
     path: config.paths.output,
-    filename: "[name].js",
+    filename: '[name].js',
   },
 
   module: {
@@ -25,30 +31,47 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: { importLoaders: 1 } },
-            'postcss-loader'
-          ]
-        })
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          } , {
+            loader: 'sass-loader'
+          }
+        ]
       }
     ],
   },
 
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
+
   plugins: [
-    new ExtractTextPlugin("gde_styles.css"),
+    new MiniCssExtractPlugin({
+      filename: `${config.name.style}.css`,
+      chunkFilename: '[id].css'
+    }),
+    new webpack.DefinePlugin({
+      GDE_GLOBAL: {
+        IS_DEV: process.env.NODE_ENV === 'development',
+      }
+    }),
   ],
 
   resolve: {
     modules: [
-      "node_modules",
-      path.resolve(__dirname, "src")
+      'node_modules',
+      path.resolve(__dirname, 'src')
     ],
 
-    extensions: [".js", ".json", ".css"],
+    extensions: ['.js', '.json', '.css'],
   },
-
-  devtool: "source-map",
 }

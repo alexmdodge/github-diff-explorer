@@ -1,7 +1,9 @@
 import Extension from './modules/extension';
-import './styles.css';
+import debug from './modules/debug';
+import './styles.scss';
 
-const globals = window.GDE_GLOBALS = {
+// TODO: Expose these to the window on dev
+const globals = {
   filesEls: null,
   activeFileEl: null,
   activeExplorerEl: null,
@@ -18,3 +20,5 @@ const globals = window.GDE_GLOBALS = {
  */
 const gdeExtension = new Extension(globals);
 gdeExtension.init();
+
+debug.log('GitHub Diff Explorer initialized in Development Mode');
