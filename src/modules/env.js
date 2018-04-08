@@ -1,3 +1,3 @@
-// Use Webpack logic to determine if environment
-// is dev then return here.
-export const isDev = false;
+// IS_DEV is generated as a global from
+// the Webpack output.
+export const isDev = GDE_GLOBAL.IS_DEV;

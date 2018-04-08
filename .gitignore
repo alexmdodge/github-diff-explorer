@@ -25,3 +25,5 @@ node_modules
 extension/lib
 extension.crx
 extension.pem
+
+*.zip
