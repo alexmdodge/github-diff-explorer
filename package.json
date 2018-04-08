@@ -8,7 +8,10 @@
     "start": "cross-env NODE_ENV=development webpack --progress --colors --watch --mode development",
     "build:dev": "cross-env NODE_ENV=development webpack --progress --colors --mode development",
     "build:prod": "cross-env NODE_ENV=production webpack --progress --colors --mode production",
-    "release": "npm run build:prod && ./pack-release.sh"
+    "release": "npm run build:prod && ./pack-release.sh",
+    "bump-version-patch": "./bump-version.sh PATCH",
+    "bump-version-minor": "./bump-version.sh MINOR",
+    "bump-version-major": "./bump-version.sh MAJOR"
   },
   "repository": {
     "type": "git",
