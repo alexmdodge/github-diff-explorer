@@ -23,6 +23,10 @@ export function isUnifiedSplitSwitchPath(path) {
  * the inputted pattern.
  */
 export function matchFinalPathFragmentWithPattern(path, pattern) {
+  if (!path || !pattern) {
+    return false;
+  }
+  
   const pathFragments = path.split('/');
   const finalFragment = pathFragments[pathFragments.length - 1];
 
@@ -33,6 +37,10 @@ export function matchFinalPathFragmentWithPattern(path, pattern) {
  * Generate a reversed path fragment array from an input path string
  */
 export function getReversedPathFragments(path) {
+  if (!path) {
+    return [''];
+  }
+  
   const fragments = path.split('/');
   fragments.reverse();
 
