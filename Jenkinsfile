@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'carbon-alpine'
+      image 'node:8.11.1-alpine'
     }
   }
   environment {
@@ -11,12 +11,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'sudo npm install'
+        sh 'npm install'
       }
     }
     stage('Test') { 
       steps {
-        sh 'sudo npm test' 
+        sh 'npm test' 
       }
     }
   }
