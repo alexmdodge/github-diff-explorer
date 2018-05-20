@@ -15,7 +15,7 @@ import debug from './debug';
  */
 export function onContentReady(fn) {
   const wrappedCallback = () => {
-    debug.log('[onContentRead] Page content ready');
+    debug.log('[onContentReady] Page content ready');
     fn();
   }
 

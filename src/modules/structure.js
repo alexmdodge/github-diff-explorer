@@ -34,7 +34,8 @@ export function getFileElements() {
 /**
  * Each set of file diffs is contained in a container element. There
  * can be multiple containers depending on how many file diffs there
- * are in the PR.
+ * are in the PR. Retrieve each of the containers and transform from
+ * a node list to an array.
  */
 export function getFileElementContainers() {
   return [...document.querySelectorAll(`.${gh.fileWrapperClass}`)];

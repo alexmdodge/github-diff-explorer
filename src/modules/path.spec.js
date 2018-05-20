@@ -1,0 +1,97 @@
+import {
+  getReversedPathFragments,
+  matchFinalPathFragmentWithPattern,
+  isUnifiedSplitSwitchPath,
+  isValidHrefPath
+} from './paths.js';
+
+describe('Path Module', () => {
+
+  describe('Test - getReversedPathFragments', () => {
+    const testPath = {
+      empty: '',
+      regular: 'foo/bar/baz',
+    }
+    
+    const expectedTestPathResult = {
+      empty: [''],
+      regular: ['baz', 'bar', 'foo'],
+    }
+    
+    test('Path is returned as reversed fragments', () => {
+      var reversedFragments = getReversedPathFragments(testPath.regular);
+      expect(reversedFragments).toEqual(expectedTestPathResult.regular);
+    });
+    
+    test('Empty path is returned as single empty array', () => {
+      var reversedFragments = getReversedPathFragments(testPath.empty);
+      expect(reversedFragments).toEqual(expectedTestPathResult.empty);
+    });
+    
+    test('Null or falsy path returns a single empty array', () => {
+      var reversedFragments = getReversedPathFragments(null);
+      expect(reversedFragments).toEqual(expectedTestPathResult.empty);
+    });
+  });
+  
+  describe('Test - matchFinalPathFragmentWithPattern', () => {
+    const testPath = 'foo/bar/my?baz&should&contain';
+    const testMatch = 'baz';
+    const testNoMatch = 'foo';
+    
+    test('Final fragment should match valid pattern', () => {
+      var isMatched = matchFinalPathFragmentWithPattern(testPath, testMatch);
+      expect(isMatched).toBeTruthy();
+    });
+    
+    test('Final fragment should not match invalid pattern', () => {
+      var isMatched = matchFinalPathFragmentWithPattern(testPath, testNoMatch);
+      expect(isMatched).toBeFalsy();
+    });
+    
+    test('Null params should not match', () => {
+      var isMatched = matchFinalPathFragmentWithPattern(null, null);
+      expect(isMatched).toBeFalsy();
+    })
+  });
+  
+  describe('Test - isUnifiedSplitSwitchPath', () => {
+    const validPath = 'my/test/path/contains?diff=split';
+    const invalidPath = 'my/test/path/does/not/contain';
+    
+    test('Path with diff view change should match', () => {
+      var result = isUnifiedSplitSwitchPath(validPath);
+      expect(result).toBeTruthy();
+    });
+    
+    test('Path with no view change should not match', () => {
+      var result = isUnifiedSplitSwitchPath(invalidPath);
+      expect(result).toBeFalsy();
+    });
+    
+    test('Falsy path should not match', () => {
+      var result = isUnifiedSplitSwitchPath(null);
+      expect(result).toBeFalsy();
+    });
+  });
+  
+  describe('Test - isValidHrefPath', () => {
+    const validPath = 'my/test/path/contains/files?other=params';
+    const invalidPath = 'my/test/path/does/not/contain';
+    
+    test('Path with files fragment should match', () => {
+      var result = isValidHrefPath(validPath);
+      expect(result).toBeTruthy();
+    });
+    
+    test('Path without files fragment should not match', () => {
+      var result = isValidHrefPath(invalidPath);
+      expect(result).toBeFalsy();
+    });
+    
+    test('Null path should not match', () => {
+      var result = isValidHrefPath(null);
+      expect(result).toBeFalsy();
+    })
+  });
+});
