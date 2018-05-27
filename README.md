@@ -14,7 +14,7 @@ A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo an
 ## Install
 To install this as a dev extension,
 * Pull this repository locally
-* `npm install && npm run build`
+* `npm install && npm run build:prod`
 * Navigate to `chrome://extensions/`
 * Enable developer mode
 * Load unpacked extension
