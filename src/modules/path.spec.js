@@ -2,7 +2,9 @@ import {
   getReversedPathFragments,
   matchFinalPathFragmentWithPattern,
   isUnifiedSplitSwitchPath,
-  isValidHrefPath
+  isValidHrefPath,
+  checkIfValidAnchor,
+  checkIfHashContainsAnchor
 } from './paths.js';
 
 describe('Path Module', () => {
@@ -36,8 +38,8 @@ describe('Path Module', () => {
   
   describe('Test - matchFinalPathFragmentWithPattern', () => {
     const testPath = 'foo/bar/my?baz&should&contain';
-    const testMatch = 'baz';
-    const testNoMatch = 'foo';
+    const testMatch = /baz/;
+    const testNoMatch = /foo/;
     
     test('Final fragment should match valid pattern', () => {
       var isMatched = matchFinalPathFragmentWithPattern(testPath, testMatch);
@@ -77,10 +79,16 @@ describe('Path Module', () => {
   
   describe('Test - isValidHrefPath', () => {
     const validPath = 'my/test/path/contains/files?other=params';
+    const validPathWithHash = 'my/test/path/contains/files/111e0dbac15bcefcf0a65552eb326aab64ab5d8a#diff-6cf900cead7a596e195beff2341aa608'
     const invalidPath = 'my/test/path/does/not/contain';
     
     test('Path with files fragment should match', () => {
       var result = isValidHrefPath(validPath);
+      expect(result).toBeTruthy();
+    });
+
+    test('Path with files commit hash fragment should match', () => {
+      var result = isValidHrefPath(validPathWithHash);
       expect(result).toBeTruthy();
     });
     
@@ -91,6 +99,75 @@ describe('Path Module', () => {
     
     test('Null path should not match', () => {
       var result = isValidHrefPath(null);
+      expect(result).toBeFalsy();
+    })
+  });
+
+  describe('Test - checkIfValidAnchor', () => {
+    const validAnchorUrl = 'https://github.com/username/repo/pull/123/files#diff-2ccaee6c5cfa6c1e0a36166894df97bcL37';
+    const invalidAnchorUrl = 'https://github.com/username/repo/pull/123/files#test';
+    const noAnchorUrl = 'https://github.com/username/repo/pull/123/files';
+
+    
+    test('Anchor with valid data format should return true', () => {
+      jsdom.reconfigure({
+        url: validAnchorUrl
+      });
+
+      var result = checkIfValidAnchor();
+      expect(result).toBeTruthy();
+    });
+    
+    test('Any other anchor should fail', () => {
+      jsdom.reconfigure({
+        url: invalidAnchorUrl
+      });
+
+      var result = checkIfValidAnchor();
+      expect(result).toBeFalsy();
+    });
+    
+    test('Null anchors should fail', () => {
+      jsdom.reconfigure({
+        url: noAnchorUrl
+      });
+
+      var result = checkIfValidAnchor();
+      expect(result).toBeFalsy();
+    })
+  });
+
+  describe('Test - checkIfHashContainsAnchor', () => {
+    const testAnchor = 'diff-2ccaee6c5cfa6c1e0a36166894df97bc';
+    const validAnchorUrl = 'https://github.com/username/repo/pull/123/files#diff-2ccaee6c5cfa6c1e0a36166894df97bcL37';
+    const invalidAnchorUrl = 'https://github.com/username/repo/pull/123/files#test';
+    const noAnchorUrl = 'https://github.com/username/repo/pull/123/files';
+
+    
+    test('Anchor with valid data format should return true', () => {
+      jsdom.reconfigure({
+        url: validAnchorUrl
+      });
+
+      var result = checkIfHashContainsAnchor(testAnchor);
+      expect(result).toBeTruthy();
+    });
+    
+    test('Any other anchor should fail', () => {
+      jsdom.reconfigure({
+        url: invalidAnchorUrl
+      });
+
+      var result = checkIfHashContainsAnchor(testAnchor);
+      expect(result).toBeFalsy();
+    });
+    
+    test('Null anchors should fail', () => {
+      jsdom.reconfigure({
+        url: noAnchorUrl
+      });
+
+      var result = checkIfHashContainsAnchor(testAnchor);
       expect(result).toBeFalsy();
     })
   });
