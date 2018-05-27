@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "testEnvironment": "jest-environment-jsdom-global"
+}

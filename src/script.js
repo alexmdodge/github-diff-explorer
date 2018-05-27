@@ -1,5 +1,5 @@
 import Extension from './modules/extension';
-import debug from './modules/debug';
+import logger from './modules/debug';
 import './styles.scss';
 
 // TODO: Expose these to the window on dev
@@ -21,4 +21,4 @@ const globals = {
 const gdeExtension = new Extension(globals);
 gdeExtension.init();
 
-debug.log('GitHub Diff Explorer initialized in Development Mode');
+logger.log('GitHub Diff Explorer initialized in Development Mode');

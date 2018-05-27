@@ -13,6 +13,7 @@ export function extractPathDataFromElements(elements) {
   return elements.map(el => {
     return {
       path: el.children[0].dataset.path,
+      anchor: el.children[0].dataset.anchor,
       el: el,
     };
   });

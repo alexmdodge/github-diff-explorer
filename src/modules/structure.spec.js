@@ -20,10 +20,12 @@ describe('Structure Module', () => {
       const testElementsArray = generateNodeArrayFor(mockSingleDiffElement, 1);
       const expectedNode = generateNodeFor(mockSingleDiffElement);
       const expectedPath = expectedNode.children[0].dataset.path;
+      const expectedAnchor = expectedNode.children[0].dataset.anchor;
 
       const result = extractPathDataFromElements(testElementsArray);
       expect(result[0].el).toEqual(expectedNode);
       expect(result[0].path).toEqual(expectedPath);
+      expect(result[0].anchor).toEqual(expectedAnchor);
     });
 
     test('Empty array returns itself', () => {
