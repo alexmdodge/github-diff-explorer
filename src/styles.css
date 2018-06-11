@@ -1,4 +1,6 @@
-/* 
+/* TODO: Change px to rem */
+
+/*
  * The top level container which features both the explorer and the
  * file diffs.
  */
@@ -22,7 +24,9 @@
  */
 .gde__files {
   flex: 1 1 0;
-  overflow-x: scroll;
+  overflow-x: hidden;
+  align-self: flex-start;
+  min-width: 300px;
 }
 
 /*
@@ -47,15 +51,16 @@
  */
 .gde__container {
   background-color: '#fafbfc';
-  width: 28%;
+  width: 500px;
   order: -1;
   margin-right: 10px;
   border: 1px solid #e1e4e8;
   border-radius: 3px;
 
   align-self: flex-start;
-  overflow-x: scroll;
-  max-height: 400px;
+  max-height: 500px;
+  min-width: 100px;
+  overflow-y: scroll;
   resize: horizontal;
 }
 
@@ -127,11 +132,13 @@
  */
 .gde__nested-files-container {
   padding: 10px 5px;
+  overflow-x: hidden;
 }
 
 .gde__nested-files {
   padding-left: 10px;
   list-style: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
