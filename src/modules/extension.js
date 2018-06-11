@@ -101,8 +101,12 @@ export default class Extension {
     const explorerHeaderEl = getExplorerHeaderElement();
     const nestedFolderEl = generateExplorerFolderElements(this.explorerData);
 
+    const nestedFolderElContainer = document.createElement('div');
+    nestedFolderElContainer.classList.add(styleClass.explorerFolderTopContainer);
+    nestedFolderElContainer.appendChild(nestedFolderEl);
+
     explorerContainerEl.appendChild(explorerHeaderEl);
-    explorerContainerEl.appendChild(nestedFolderEl);
+    explorerContainerEl.appendChild(nestedFolderElContainer);
 
     // The diff viewer is the container which has both the file
     // explorer and the file diffs.

@@ -130,9 +130,50 @@ export function getExplorerContainerElement() {
 }
 
 export function getExplorerHeaderElement() {
-  const el = document.createElement('h5');
+  const el = document.createElement('div');
+  const title = document.createElement('h5');
+
   el.classList.add(styleClass.explorerHeader);
-  el.innerText = 'File Explorer';
+  title.classList.add(styleClass.explorerHeaderTitle);
+
+  title.innerText = 'File Explorer';
+
+  el.appendChild(title);
+  el.appendChild(getExplorerHeaderMenuElement());
+
+  return el;
+}
+
+function getExplorerHeaderMenuElement() {
+  const el = document.createElement('div');
+  el.classList.add(styleClass.explorerHeaderMenu);
+
+  const minBtn = document.createElement('span');
+  const maxBtn = document.createElement('span');
+  minBtn.classList.add(styleClass.explorerMenuButton);
+  minBtn.classList.add(styleClass.explorerActiveMenuButton);
+  maxBtn.classList.add(styleClass.explorerMenuButton);
+
+  minBtn.title = 'Minimize Explorer';
+  maxBtn.title = 'Maximize Explorer';
+
+  minBtn.innerHTML = icons.minus;
+  maxBtn.innerHTML = icons.plus;
+
+  minBtn.addEventListener('click', () => {
+    minBtn.classList.remove(styleClass.explorerActiveMenuButton);
+    maxBtn.classList.add(styleClass.explorerActiveMenuButton);
+    // Container minimize width
+  });
+
+  maxBtn.addEventListener('click', () => {
+    maxBtn.classList.remove(styleClass.explorerActiveMenuButton);
+    minBtn.classList.add(styleClass.explorerActiveMenuButton);
+    // Container expand width
+  });
+
+  el.appendChild(minBtn);
+  el.appendChild(maxBtn);
 
   return el;
 }
