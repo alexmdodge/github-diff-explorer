@@ -98,7 +98,7 @@ export default class Extension {
     // The explorer element is the file explorer located
     // to the left of the viewer.
     const explorerContainerEl = getExplorerContainerElement();
-    const explorerHeaderEl = getExplorerHeaderElement();
+    const explorerHeaderEl = getExplorerHeaderElement(explorerContainerEl);
     const nestedFolderEl = generateExplorerFolderElements(this.explorerData);
 
     const nestedFolderElContainer = document.createElement('div');

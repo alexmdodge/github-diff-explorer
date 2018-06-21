@@ -129,22 +129,39 @@ export function getExplorerContainerElement() {
   return el;
 }
 
-export function getExplorerHeaderElement() {
+export function getExplorerHeaderElement(gdeContainer) {
   const el = document.createElement('div');
-  const title = document.createElement('h5');
-
   el.classList.add(styleClass.explorerHeader);
-  title.classList.add(styleClass.explorerHeaderTitle);
 
-  title.innerText = 'File Explorer';
+  const headerTitleElement = getExplorerHeaderTitle();
+  const headerMenuElement = getExplorerHeaderMenuElement(gdeContainer);
 
-  el.appendChild(title);
-  el.appendChild(getExplorerHeaderMenuElement());
+  el.appendChild(headerTitleElement);
+  el.appendChild(headerMenuElement);
 
   return el;
 }
 
-function getExplorerHeaderMenuElement() {
+function getExplorerHeaderTitle() {
+  const container = document.createElement('span');
+  const logo = document.createElement('img');
+  const title = document.createElement('h5');
+
+  container.classList.add(styleClass.explorerHeaderTitleContainer);
+
+  title.classList.add(styleClass.explorerHeaderTitle);
+  title.innerText = 'File Explorer';
+
+  logo.classList.add(styleClass.explorerHeaderLogo);
+  logo.src = icons.logo;
+
+  container.appendChild(logo);
+  container.appendChild(title);
+
+  return container;
+}
+
+function getExplorerHeaderMenuElement(gdeContainer) {
   const el = document.createElement('div');
   el.classList.add(styleClass.explorerHeaderMenu);
 
@@ -163,13 +180,15 @@ function getExplorerHeaderMenuElement() {
   minBtn.addEventListener('click', () => {
     minBtn.classList.remove(styleClass.explorerActiveMenuButton);
     maxBtn.classList.add(styleClass.explorerActiveMenuButton);
-    // Container minimize width
+
+    gdeContainer.classList.add(styleClass.minimizedContainer);
   });
 
   maxBtn.addEventListener('click', () => {
     maxBtn.classList.remove(styleClass.explorerActiveMenuButton);
     minBtn.classList.add(styleClass.explorerActiveMenuButton);
-    // Container expand width
+
+    gdeContainer.classList.remove(styleClass.minimizedContainer);
   });
 
   el.appendChild(minBtn);

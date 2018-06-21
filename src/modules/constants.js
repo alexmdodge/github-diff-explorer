@@ -16,8 +16,13 @@ export const styleClass = {
   activeFile: 'gde__file--active',
   activeExplorer: 'gde__item--active',
   explorerContainer: 'gde__container',
+  minimizedContainer: 'gde__container--minimized',
   explorerHeader: 'gde__header',
+  minimizedHeaderContainer: 'gde__header--minimized',
   explorerHeaderTitle: 'gde__header-title',
+  minimizedHeaderTitle: 'gde__header-title--minimized',
+  explorerHeaderLogo: 'gde__header-logo',
+  explorerHeaderTitleContainer: 'gde__header-title-container',
   explorerFolderHeader: 'gde__folder-header',
   explorerHeaderMenu: 'gde__folder-header-menu',
   explorerMenuButton: 'gde__menu-btn',
@@ -27,5 +32,5 @@ export const styleClass = {
   fileDiff: 'gde__file',  
   explorerFolderContainer: 'gde__nested-files',
   explorerFolderTopContainer: 'gde__nested-files-container',
-  closedFolder: 'gde__folder-closed'
+  closedFolder: 'gde__folder-closed',
 }

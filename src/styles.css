@@ -64,6 +64,14 @@
   resize: horizontal;
 }
 
+.gde__container--minimized {
+  width: 70px !important;
+  overflow-y: hidden;
+  resize: none;
+  min-width: 70px;
+  height: 43px;
+}
+
 /*
  * The header element which contains the explorer controls and title
  */
@@ -81,14 +89,24 @@
   flex-direction: row;
   width: 100%;
   height: 43px;
-  padding: 8px;
+  padding: 8px 10px;
+}
+
+.gde__header-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .gde__header-title {
   padding-left: 5px;
-  font-weight: bold;
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
+}
+
+.gde__header-logo {
+  width: 16px;
 }
 
 .gde__folder-header-menu {
