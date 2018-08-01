@@ -10,6 +10,7 @@ export const gh = {
 export const styleClass = {
   root: 'gde',
   icon: 'gde__icon',
+  loader: 'gde__loader',
   fileIcon: 'gde__file-icon',
   caretIcon: 'gde__caret-icon',
   pageContainer: 'gde__page',

@@ -35,6 +35,13 @@ export function generateExplorerFolderElements(explorerData) {
   return explorerFolderEl;
 }
 
+export function getLoadingElement() {
+  const el = document.createElement('div');
+  el.classList.add(styleClass.loader);
+
+  return el;
+}
+
 export function removeElementChildren(el) {
   while (el.firstChild) {
     el.removeChild(el.firstChild);
