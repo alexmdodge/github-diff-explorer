@@ -1,6 +1,6 @@
 import Extension from './modules/extension';
 import logger from './modules/debug';
-import './styles.scss';
+import './styles.css';
 
 // TODO: Expose these to the window on dev
 const globals = {

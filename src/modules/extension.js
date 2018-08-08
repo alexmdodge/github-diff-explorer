@@ -8,7 +8,8 @@ import {
   getFilesContainerElement,
   addEachFileToContainer,
   prepareEmptyDiffViewerElement,
-  setupPageStructure
+  setupPageStructure,
+  getLoadingElement
 } from './dom';
 import { extractPathDataFromElements } from './structure';
 import { getReversedPathFragments, isValidHrefPath, checkIfValidAnchor, checkIfHashContainsAnchor } from './paths';
@@ -25,6 +26,7 @@ export default class Extension {
     this.activeFileEl = globals.activeFileEl;
     this.activeExplorerEl = globals.activeExplorerEl;
     this.isExplorerParsing = false;
+    this.loadingEl = null;
 
     this.explorerData = null;
     this.currentHref = window.location.href;
@@ -63,6 +65,8 @@ export default class Extension {
   handleLocationChanged(nextHref) {
     this.currentHref = nextHref;
 
+    // this.cleanupLoadingEl();
+
     if (!this.isExplorerParsing) {
       logger.log('[handleLocationChanged] Location changed, setting content ready');
       onContentReady(this.handleContentReady);
@@ -74,6 +78,10 @@ export default class Extension {
    */
   handleContentReady() {
     this.isExplorerParsing = true;
+
+    // this.loadingEl = getLoadingElement();
+    // document.querySelector('body').appendChild(this.loadingEl);
+
     onFilesLoaded(this.handleFilesLoaded);
   }
   
@@ -88,6 +96,15 @@ export default class Extension {
     this.buildFileExplorer();
   }
 
+  cleanupLoadingEl() {
+    if (!this.loadingEl) {
+      return;
+    }
+
+    this.loadingEl.remove();
+    this.loadingEl = null;
+  }
+
   /**
    * Processes the current diff structure and creates a file explorer
    * from the content.
@@ -98,11 +115,15 @@ export default class Extension {
     // The explorer element is the file explorer located
     // to the left of the viewer.
     const explorerContainerEl = getExplorerContainerElement();
-    const explorerHeaderEl = getExplorerHeaderElement();
+    const explorerHeaderEl = getExplorerHeaderElement(explorerContainerEl);
     const nestedFolderEl = generateExplorerFolderElements(this.explorerData);
 
+    const nestedFolderElContainer = document.createElement('div');
+    nestedFolderElContainer.classList.add(styleClass.explorerFolderTopContainer);
+    nestedFolderElContainer.appendChild(nestedFolderEl);
+
     explorerContainerEl.appendChild(explorerHeaderEl);
-    explorerContainerEl.appendChild(nestedFolderEl);
+    explorerContainerEl.appendChild(nestedFolderElContainer);
 
     // The diff viewer is the container which has both the file
     // explorer and the file diffs.
@@ -125,6 +146,9 @@ export default class Extension {
     setTimeout(() => {
       logger.log('[buildFileExplorer] File explorer is complete: ', diffViewerEl);
       this.isExplorerParsing = false;
+
+      // clearTimeout(loadingTimeout);
+      // this.cleanupLoadingEl();
     }, 0);
   }
 
