@@ -1,0 +1,23 @@
+html {
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: 
+    linear-gradient(rgba(63, 41, 93, 0.68), rgba(148, 80, 177, 0.68)), 
+    url('assets/background.jpg');
+  margin: 0;
+  padding: 0;
+
+  width: 100vw;
+  height: 100%;
+}
