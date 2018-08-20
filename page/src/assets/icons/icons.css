@@ -6,6 +6,10 @@
   width: 20px;
 }
 
+.icon__twitter:hover {
+  color: #eee;
+}
+
 .icon__check {
   width: 35px;
 }

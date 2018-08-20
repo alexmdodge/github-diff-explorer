@@ -7,6 +7,7 @@
     "ajv": "6.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-router-dom": "4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -14,5 +15,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "devDependencies": {}
 }

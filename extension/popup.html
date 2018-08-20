@@ -2,11 +2,27 @@
 
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300i" rel="stylesheet">
+
     <title>GitHub Diff Explorer Menu</title>
     <style type="text/css">
+      html {
+        padding: 0;
+        margin: 0px 10px;
+
+        background: white;
+      }
       body {
-        margin: 10px;
         white-space: nowrap;
+        color: white;
+        padding: 5px 15px 15px;
+        border-radius: 2.5px;
+        margin: 5px 0;
+
+        background: linear-gradient(rgba(63, 41, 93, 0.8), rgba(148, 80, 177, 0.8)); 
       }
 
       h1 {
@@ -19,12 +35,43 @@
         flex-direction: column;
         justify-content: space-between;
       }
+
+      .popup__logo {
+        width: 50px;
+      }
+
+      .popup__title {
+        font-size: 24px;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      .popup__title-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      small {
+        color: rgba(240,240,240,0.5);
+      }
+
+      small div {
+        text-align: center;
+      }
+
+      a {
+        color: rgb(240, 240, 240);
+      }
     </style>
 
   </head>
 
   <body>
-    <h1>GitHub Diff Explorer</h1>
+    <div class="popup__title-container">
+      <img class="popup__logo" src="gde-banner.png">
+      <h1 class="popup__title">GitHub Diff Explorer</h1>
+    </div>
     <div id="container">
       <div>
         Please files any issues 
@@ -32,19 +79,24 @@
           on GitHub
         </a>!
       </div>
-      <div>
-        Icons obtained from 
-        <a href="https://fontawesome.com/license" target="_blank">
-          Font Awesome
-        </a>
-      </div>
-      <div>
-        A big thanks to 
-        <a href="https://github.com/andeladenaro" target="_blank">
-          Andela Denaro 
-        </a>
-        for the logo and banner design!
-      </div>
+      
+      <small>
+        <div class="popup__shoutout">
+          Icons obtained from 
+          <a href="https://fontawesome.com/license" target="_blank">
+            Font Awesome
+          </a>
+        </div>
+        <div class="popup__shoutout">
+          A big thanks to 
+          <a href="https://github.com/andeladenaro" target="_blank">
+            Andela Denaro 
+          </a>
+          for the logo and banner design!
+        </div>
+      </small>
+
+      https://www.paypal.me/AlexDodge
     </div>
   </body>
 </html>

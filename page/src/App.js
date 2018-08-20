@@ -1,69 +1,27 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
 
-import logo from 'assets/gde-banner.png';
-import Check from 'assets/icons/Check.js';
-import Twitter from 'assets/icons/Twitter.js';
+import Home from 'components/Home';
+import PrivacyPolicy from 'components/PrivacyPolicy';
+import NoPage from 'components/NoPage';
 import 'App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="app">
-        <div className="container">
-          <div className="title__container">
-            <img src={logo} className="title__logo" alt="Diff Explorer Logo" />
-            <h1 className="title">Diff Explorer</h1>
-          </div>
-          <div className="social__container">
-            <div className="social__twitter">
-              <a href="https://twitter.com/alexmdodge" className="social__link">
-                <Twitter />
-              </a>
-            </div>
-            <a
-              className="github-button"
-              href="https://github.com/alexmdodge/github-diff-explorer"
-              data-size="small" 
-              data-show-count="true" 
-              aria-label="Star alexmdodge/github-diff-explorer on GitHub"
-            >
-              Star
-            </a>
-          </div>
-          <p className="description__highlight">
-            Tired of reviewing long and cumbersome pull requests using
-            the default GitHub interface?
-          </p>
-
-          <p className="description__body">
-            The <b>GitHub Diff Explorer</b> is a Chrome extension 
-            which generates a file explorer similar to that of BitBucket
-            with a minimalist focus. This extension provides:
-          </p>
-
-          <ul className="feature__list">
-            <li className="feature__list-item">
-              <Check />
-              <span> More screen real estate with a full width view and a resizable explorer</span>
-            </li>
-            <li className="feature__list-item">
-              <Check />
-              <span> Improved review management and organization with collapsible folder views</span>
-            </li>
-            <li className="feature__list-item">
-              <Check />
-              <span> Deep links to line references and review comments</span>
-            </li>
-          </ul>
+      <Router>
+        <div className="app">
+          <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/privacy-policy" component={PrivacyPolicy} />
+          <Route component={NoPage} />
+          </Switch>
         </div>
-
-        <footer className="footer">
-          <div>
-            <a href="/privacy-policy.html" className="link">Privacy Policy</a>
-            <a href="https://www.alexdodge.ca" className="link">About</a>
-          </div>
-        </footer>
-      </div>
+      </Router>
     );
   }
 }
