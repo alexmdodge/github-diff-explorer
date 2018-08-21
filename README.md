@@ -1,6 +1,6 @@
 <img src="https://i.imgur.com/kthxYY7.pngg" width="900px">
 
-The GitHub Diff Explorer is a Chrome extension which replaces the current GitHub diff viewer with a file explorer similar to that of BitBucket and Stash.
+The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.
 
 A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo and banner design!
 
@@ -8,11 +8,14 @@ A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo an
 
 ### [See it in action](https://imgur.com/ySmeWTh)
 ## Features
-* Full width GitHub diff view
-* File explorer which allows quick selection between files relative to their actual location in the project directory
+* More screen real estate with a full width view and a resizable explorer
+* Improved review management and organization with collapsible folder views
+* Deep links to line references and review comments
 
 ## Install
-To install this as a dev extension,
+Install the full extension [here](https://chrome.google.com/webstore/detail/github-diff-explorer/kagcmhcnjehpeihgmcohmdceffihkglk)
+
+To install it as a dev extension,
 * Pull this repository locally
 * `npm install && npm run build:prod`
 * Navigate to `chrome://extensions/`
