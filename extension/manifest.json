@@ -3,7 +3,7 @@
     "name": "__MSG_extName__",
     "version": "1.1.5",
     "default_locale": "en",
-    "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
+    "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
     "icons": {
         "16": "images/icon16.png",
         "48": "images/icon48.png",

@@ -1,5 +1,9 @@
 /* TODO: Change px to rem */
 
+.diffbar-item.toc-select.select-menu.js-menu-container.js-select-menu {
+  display: none;
+}
+
 /*
  * The top level container which features both the explorer and the
  * file diffs.
@@ -24,7 +28,6 @@
  */
 .gde__files {
   flex: 1 1 0;
-  overflow-x: hidden;
   align-self: flex-start;
   min-width: 300px;
 }

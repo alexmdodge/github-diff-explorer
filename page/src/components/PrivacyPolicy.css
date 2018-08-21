@@ -1,0 +1,12 @@
+.privacy__body {
+  color: rgb(226, 222, 222);
+  font-weight: 300;
+  font-size: 2rem;
+  padding: 1rem;
+  margin: 0;
+}
+
+.privacy__container {
+  width: 75vw;
+  margin: 2rem auto;
+}
