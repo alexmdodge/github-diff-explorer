@@ -4,9 +4,8 @@ The GitHub Diff Explorer is a Chrome extension which generates a seamless file e
 
 A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo and banner design!
 
-<img src="https://i.imgur.com/fRAFvijh.png" width="900px">
+<img src="https://i.imgur.com/WzrhAXe.png" width="900px">
 
-### [See it in action](https://imgur.com/ySmeWTh)
 ## Features
 * More screen real estate with a full width view and a resizable explorer
 * Improved review management and organization with collapsible folder views
