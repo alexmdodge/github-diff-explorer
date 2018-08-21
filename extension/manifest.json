@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "__MSG_extName__",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "default_locale": "en",
     "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
     "icons": {
@@ -35,5 +35,5 @@
         "http://*.google.com/"
     ],
     "short_name": "GitHub Diff Explorer",
-    "version_name": "1.1.5"
+    "version_name": "1.1.6"
   }
