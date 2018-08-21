@@ -74,7 +74,7 @@ const Home = props => {
 
         <div className="description__install-container">
           <button className="install__button" onMouseOver={onInstallHover}>
-            <a className="link--button" href="">
+            <a className="link--button" href="https://chrome.google.com/webstore/detail/github-diff-explorer/kagcmhcnjehpeihgmcohmdceffihkglk">
               Install Now
             </a>
           </button>
