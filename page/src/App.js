@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +10,8 @@ import Home from 'components/Home';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import NoPage from 'components/NoPage';
 import 'App.css';
+
+ReactGA.initialize('UA-86892434-2');
 
 class App extends Component {
   render() {

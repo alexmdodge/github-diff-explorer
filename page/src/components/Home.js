@@ -1,19 +1,35 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import ReactGA from 'react-ga';
 import 'components/Home.css';
 
+import sample from 'assets/sample.png';
 import logo from 'assets/gde-banner.png';
 import Check from 'assets/icons/Check.js';
 import Twitter from 'assets/icons/Twitter.js';
 
 
 const Home = props => {
+  ReactGA.pageview('/');
+  let hovered = false;
+
+  const onInstallHover = events => {
+    if (!hovered) {
+      ReactGA.event({
+        category: 'User Interaction',
+        action: 'Hover Over Install'
+      });
+    }
+
+    hovered = true;
+  }
+
   return (
     <React.Fragment>
       <div className="container">
         <div className="title__container">
           <img src={logo} className="title__logo" alt="Diff Explorer Logo" />
-          <h1 className="title">Diff Explorer</h1>
+          <h1 className="title">GitHub Diff Explorer</h1>
         </div>
         <div className="social__container">
           <div className="social__twitter">
@@ -38,8 +54,7 @@ const Home = props => {
 
         <p className="description__body">
           The <b>GitHub Diff Explorer</b> is a Chrome extension 
-          which generates a file explorer similar to that of BitBucket
-          with a minimalist focus. This extension provides:
+          which generates a seamless file explorer with a minimalist focus. This extension provides:
         </p>
 
         <ul className="feature__list">
@@ -56,6 +71,20 @@ const Home = props => {
             <span> Deep links to line references and review comments</span>
           </li>
         </ul>
+
+        <div className="description__install-container">
+          <button className="install__button" onMouseOver={onInstallHover}>
+            <a className="link--button" href="">
+              Install Now
+            </a>
+          </button>
+          <div className="install__overlay"></div>
+          <img
+            src={sample} 
+            className="description__screenshot"
+            alt="GitHub Diff Explorer Screenshot"
+          />
+        </div>
       </div>
 
       <footer className="footer">

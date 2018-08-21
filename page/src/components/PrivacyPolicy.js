@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { Link } from 'react-router-dom';
 import 'components/PrivacyPolicy.css';
 
 const PrivacyPolicy = props => {
+  ReactGA.pageview('/privacy-policy');
+
   const titleStyles = {
     marginBottom: 0,
     paddingBottom: 0,
