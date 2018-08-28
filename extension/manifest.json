@@ -31,8 +31,7 @@
     ],
     "offline_enabled": true,
     "permissions": [
-        "tabs",
-        "http://*.google.com/"
+        "https://github.com/"
     ],
     "short_name": "GitHub Diff Explorer",
     "version_name": "1.1.6"
