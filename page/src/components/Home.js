@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import ReactGA from 'react-ga';
-import 'components/Home.css';
+import homePageClass from 'components/Home.styles';
 
 import sample from 'assets/sample.png';
 import logo from 'assets/gde-banner.png';
@@ -25,7 +25,7 @@ const Home = props => {
   }
 
   return (
-    <React.Fragment>
+    <div className={homePageClass}>
       <div className="container">
         <div className="title__container">
           <img src={logo} className="title__logo" alt="Diff Explorer Logo" />
@@ -93,7 +93,7 @@ const Home = props => {
           <a href="https://www.alexdodge.ca" className="link">About</a>
         </div>
       </footer>
-    </React.Fragment>
+    </div>
   )
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
-import 'components/NoPage.css';
+import noPageClass from 'components/NoPage.styles';
 
 const NoPage = props => {
   return (
-    <React.Fragment>
+    <div className={noPageClass}>
       <div className="no-page__container">
         <h1 className="title no-page__title">Sorry</h1>
         <h1 className="title--light no-page__title">That page does not exist.</h1>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
 

@@ -6,15 +6,17 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 /* Local Imports */
 const path = require('path');
-const config = require('./project.config.js');
+const { name, paths } = require('./package.json').config;
+
+console.log('Variables are: ', name, paths);
 
 module.exports = {
   entry: {
-    [`${config.name.script}`]: config.paths.entry,
+    [`${name.script}`]: paths.entry,
   },
 
   output: {
-    path: config.paths.output,
+    path: path.resolve(__dirname, paths.output),
     filename: '[name].js',
   },
 
@@ -25,9 +27,6 @@ module.exports = {
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: 'babel-preset-env'
-          }
         }
       },
       {
@@ -58,7 +57,7 @@ module.exports = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `${config.name.style}.css`,
+      filename: `${name.style}.css`,
       chunkFilename: '[id].css'
     }),
     new webpack.DefinePlugin({
