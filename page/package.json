@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "1.4.3",
     "ajv": "6.5.2",
+    "emotion": "9.2.9",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-ga": "2.5.3",
