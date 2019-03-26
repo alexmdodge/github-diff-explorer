@@ -1,14 +1,7 @@
-/* Vendor Imports */
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-/* Local Imports */
 const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { name, paths } = require('./package.json').config;
-
-console.log('Variables are: ', name, paths);
 
 module.exports = {
   entry: {
@@ -25,9 +18,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-        }
+        use: 'babel-loader',
       },
       {
         test: /\.css$/,
@@ -39,32 +30,16 @@ module.exports = {
               importLoaders: 1 
             } 
           },
-          'postcss-loader'
         ]
       }
     ],
-  },
-
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-      }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
   },
 
   plugins: [
     new MiniCssExtractPlugin({
       filename: `${name.style}.css`,
       chunkFilename: '[id].css'
-    }),
-    new webpack.DefinePlugin({
-      GDE_GLOBAL: {
-        IS_DEV: process.env.NODE_ENV === 'development',
-      }
-    }),
+    })
   ],
 
   resolve: {

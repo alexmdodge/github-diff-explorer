@@ -5,7 +5,7 @@ import {
   isValidHrefPath,
   checkIfValidAnchor,
   checkIfHashContainsAnchor
-} from './paths.js';
+} from '../src/modules/paths.js';
 
 describe('Path Module', () => {
 

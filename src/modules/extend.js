@@ -5,10 +5,10 @@
  * Note this is modified under the MIT license.
  * 
  * Specifically the method was modified to terminate recursive dives whenever
- * a HTMLElement is matched.
+ * an HTMLElement is matched.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-function isSpecificValue(val) {
+export function isSpecificValue(val) {
   return (
       val instanceof Date ||
       val instanceof RegExp ||
@@ -16,7 +16,7 @@ function isSpecificValue(val) {
   ) ? true : false;
 }
 
-function cloneSpecificValue(val) {
+export function cloneSpecificValue(val) {
   if (val instanceof Date) {
       return new Date(val.getTime());
   } else if (val instanceof RegExp) {
@@ -72,7 +72,7 @@ export default function deepExtend() {
   // convert arguments to array and cut off target object
   var args = Array.prototype.slice.call(arguments, 1);
 
-  var val, src, clone;
+  var val, src;
 
   args.forEach(function (obj) {
       // skip argument if isn't an object, is null, or is an array
