@@ -5,12 +5,12 @@ import {
   extractFileElementsFromContainers,
   mergeFileElements,
   filterUnusedElements,
-} from './structure';
+} from '../src/modules/structure';
 
-import { gh } from './constants';
-import mockSingleDiffElement from '../../test/mock-elements/mock-single-diff-element';
-import mockPrPage from '../../test/mock-elements/mock-pr-page';
-import { generateNodeArrayFor, generateNodeFor } from '../../test/helpers';
+import { gh } from '../src/modules/constants';
+import mockSingleDiffElement from './mock-elements/mock-single-diff-element';
+import mockPrPage from './mock-elements/mock-pr-page';
+import { generateNodeArrayFor, generateNodeFor } from './helpers/helpers';
 
 describe('Structure Module', () => {
 

@@ -4,11 +4,11 @@
   "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config ./jest.config.json",
-    "start": "cross-env NODE_ENV=development webpack --progress --colors --watch --mode development",
-    "build:dev": "cross-env NODE_ENV=development webpack --progress --colors --mode development",
-    "build:prod": "cross-env NODE_ENV=production webpack --progress --colors --mode production",
+    "start": "npm run serve",
+    "build:dev": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js",
     "release": "npm run build:prod && ./pack-release.sh",
+    "test": "jest --config ./jest.config.json",
     "bump-version-patch": "./bump-version.sh PATCH",
     "bump-version-minor": "./bump-version.sh MINOR",
     "bump-version-major": "./bump-version.sh MAJOR"
@@ -42,36 +42,24 @@
       "output": "./extension/lib"
     }
   },
-  "dependencies": {
-    "@types/jest": "22.2.3",
-    "autoprefixer": "7.2.3",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
-    "concurrently": "3.5.1",
-    "cross-env": "5.1.4",
-    "css-loader": "0.28.7",
-    "deep-extend": "0.5.0",
-    "http-server": "0.10.0",
-    "jest": "23.6.0",
-    "jest-environment-jsdom": "22.4.3",
-    "jest-environment-jsdom-global": "1.0.3",
-    "mini-css-extract-plugin": "0.4.0",
-    "optimize-css-assets-webpack-plugin": "4.0.0",
-    "postcss-cssnext": "3.0.2",
-    "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-import": "11.0.0",
-    "postcss-loader": "2.0.9",
-    "postcss-url": "7.3.0",
-    "style-loader": "0.19.1",
-    "uglify-es": "3.3.9",
-    "uglifyjs-webpack-plugin": "1.2.4",
-    "webpack-cli": "2.0.14"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.0.1",
     "@babel/preset-env": "7.0.0",
+    "babel-jest": "24.5.0",
     "babel-loader": "8.0.2",
-    "request": "2.87.0",
-    "webpack": "4.5.0"
+    "cross-env": "5.2.0",
+    "css-loader": "2.1.1",
+    "http-server": "0.11.1",
+    "jest": "24.5.0",
+    "jest-environment-jsdom": "24.5.0",
+    "jest-environment-jsdom-global": "1.2.0",
+    "mini-css-extract-plugin": "0.5.0",
+    "request": "2.88.0",
+    "style-loader": "0.23.1",
+    "webpack": "4.5.0",
+    "webpack-cli": "3.3.0",
+    "webpack-dev-server": "3.2.1",
+    "webpack-merge": "4.2.1"
   }
 }

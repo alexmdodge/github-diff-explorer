@@ -7,7 +7,7 @@ A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo an
 <img src="https://i.imgur.com/WzrhAXe.png" width="900px">
 
 ## Features
-* More screen real estate with a full width view and a resizable explorer
+* More screen real estate with a full width view and a re-sizable explorer
 * Improved review management and organization with collapsible folder views
 * Deep links to line references and review comments
 
