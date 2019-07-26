@@ -21,6 +21,7 @@
  */
 .gde__page {
   width: 95% !important;
+  max-width: none !important;
 }
 
 /*
