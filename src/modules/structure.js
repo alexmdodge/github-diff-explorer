@@ -14,6 +14,8 @@ export function extractPathDataFromElements(elements) {
     return {
       path: el.children[0].dataset.path,
       anchor: el.children[0].dataset.anchor,
+      viewedButton: el.children[0].getElementsByClassName('js-reviewed-checkbox')[0],
+      viewed: el.children[0].getElementsByClassName('js-reviewed-checkbox')[0].getAttribute('data-ga-click').includes("true"),
       el: el,
     };
   });

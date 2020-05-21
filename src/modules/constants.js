@@ -16,6 +16,7 @@ export const styleClass = {
   pageContainer: 'gde__page',
   activeFile: 'gde__file--active',
   activeExplorer: 'gde__item--active',
+  viewedExplorer: 'gde__item--viewed',
   explorerContainer: 'gde__container',
   minimizedContainer: 'gde__container--minimized',
   explorerHeader: 'gde__header',

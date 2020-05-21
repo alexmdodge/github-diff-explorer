@@ -227,6 +227,10 @@
   color: #36BC53;
 }
 
+.gde__item--viewed {
+  text-decoration: line-through;
+}
+
 .gde__folder-closed + .gde__nested-files {
   display: none;
 }
