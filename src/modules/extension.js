@@ -171,7 +171,6 @@ export default class Extension {
         fileEl: data.el,
         explorerItemEl: getExplorerItemElementWithName(changedFileName),
         fileViewed: data.viewed,
-        fileViewedButton: data.viewedButton,
       }
 
       const isValidAnchor = checkIfValidAnchor();
@@ -195,32 +194,21 @@ export default class Extension {
         changedFile.explorerItemEl.classList.add(styleClass.viewedExplorer);
       }
 
-      changedFile.fileViewedButton.addEventListener('click', () => {
-        changedFile.fileViewed = !changedFile.fileViewed;
+      changedFile.fileEl.children[0].addEventListener('click', () => {
 
-        console.log(777);
-        console.log(changedFile.fileViewed);
+        if (event.target.classList.contains('js-reviewed-checkbox')) {
 
-        if (changedFile.fileViewed) {
-          changedFile.explorerItemEl.classList.add(styleClass.viewedExplorer);
-          console.log(7);
-          console.log(styleClass.activeExplorer)
-          console.log(8)
-          console.log(styleClass.viewedExplorer)
-          console.log(9)
-          console.log(changedFile.explorerItemEl.classList);
-          console.log(10)
-          console.log(changedFile.fileEl)
-          console.log(11)
-        } else {
-          changedFile.explorerItemEl.classList.remove(styleClass.viewedExplorer);
+          changedFile.fileViewed = !changedFile.fileViewed;
+
+          console.log(777);
+          console.log(changedFile.fileViewed);
+
+          if (changedFile.fileViewed) {
+            changedFile.explorerItemEl.classList.add(styleClass.viewedExplorer);
+          } else {
+            changedFile.explorerItemEl.classList.remove(styleClass.viewedExplorer);
+          }
         }
-
-        changedFile.fileViewedButton = changedFile.fileEl.children[0].getElementsByClassName('js-reviewed-checkbox');
-        
-        
-        console.log(changedFile.fileEl.children[0].getElementsByClassName('js-reviewed-checkbox'));
-        console.log(changedFile.fileEl.children[0].getElementsByClassName('js-reviewed-checkbox')[0]);
       });
 
       const reducer = (acc, path) => {
