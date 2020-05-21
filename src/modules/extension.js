@@ -170,7 +170,6 @@ export default class Extension {
       const changedFile = {
         fileEl: data.el,
         explorerItemEl: getExplorerItemElementWithName(changedFileName),
-        fileViewed: data.viewed,
       }
 
       const isValidAnchor = checkIfValidAnchor();
@@ -190,23 +189,21 @@ export default class Extension {
         this.setActiveFile(changedFile);
       });
 
-      if (changedFile.fileViewed) {
-        changedFile.explorerItemEl.classList.add(styleClass.viewedExplorer);
+      let fileViewed = this.isViewedFile(changedFile);
+      const fileHeader = changedFile.fileEl.children[0];
+
+      if (fileViewed) {
+        this.addViewedFile(changedFile);
       }
 
-      changedFile.fileEl.children[0].addEventListener('click', () => {
-
+      fileHeader.addEventListener('click', () => {
         if (event.target.classList.contains('js-reviewed-checkbox')) {
+          fileViewed = !fileViewed;
 
-          changedFile.fileViewed = !changedFile.fileViewed;
-
-          console.log(777);
-          console.log(changedFile.fileViewed);
-
-          if (changedFile.fileViewed) {
-            changedFile.explorerItemEl.classList.add(styleClass.viewedExplorer);
+          if (fileViewed) {
+            this.addViewedFile(changedFile)
           } else {
-            changedFile.explorerItemEl.classList.remove(styleClass.viewedExplorer);
+            this.removeViewedFile(changedFile)
           }
         }
       });
@@ -232,5 +229,19 @@ export default class Extension {
   clearActiveFile() {
     this.activeFileEl.classList.remove(styleClass.activeFile);
     this.activeExplorerEl.classList.remove(styleClass.activeExplorer);
+  }
+
+  isViewedFile(file) {
+    return file.fileEl.children[0].getElementsByClassName('js-reviewed-checkbox')[0].getAttribute('data-ga-click').includes("true")
+  }
+
+  addViewedFile(file) {
+    this.viewedExplorerEl = file.explorerItemEl;
+    this.viewedExplorerEl.classList.add(styleClass.viewedExplorer);
+  }
+
+  removeViewedFile(file) {
+    this.viewedExplorerEl = file.explorerItemEl;
+    this.viewedExplorerEl.classList.remove(styleClass.viewedExplorer);
   }
 }
