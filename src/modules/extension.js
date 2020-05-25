@@ -189,6 +189,25 @@ export default class Extension {
         this.setActiveFile(changedFile);
       });
 
+      let fileViewed = this.isViewedFile(changedFile);
+      const fileHeader = changedFile.fileEl.children[0];
+
+      if (fileViewed) {
+        this.addViewedFile(changedFile);
+      }
+
+      fileHeader.addEventListener('click', () => {
+        if (event.target.classList.contains('js-reviewed-checkbox')) {
+          fileViewed = !fileViewed;
+
+          if (fileViewed) {
+            this.addViewedFile(changedFile)
+          } else {
+            this.removeViewedFile(changedFile)
+          }
+        }
+      });
+
       const reducer = (acc, path) => {
         return {
           [path]: acc
@@ -210,5 +229,19 @@ export default class Extension {
   clearActiveFile() {
     this.activeFileEl.classList.remove(styleClass.activeFile);
     this.activeExplorerEl.classList.remove(styleClass.activeExplorer);
+  }
+
+  isViewedFile(file) {
+    return file.fileEl.children[0].getElementsByClassName('js-reviewed-checkbox')[0].getAttribute('data-ga-click').includes("true")
+  }
+
+  addViewedFile(file) {
+    this.viewedExplorerEl = file.explorerItemEl;
+    this.viewedExplorerEl.classList.add(styleClass.viewedExplorer);
+  }
+
+  removeViewedFile(file) {
+    this.viewedExplorerEl = file.explorerItemEl;
+    this.viewedExplorerEl.classList.remove(styleClass.viewedExplorer);
   }
 }
