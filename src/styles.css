@@ -20,7 +20,7 @@
  * view to stretch the full width of the display
  */
 .gde__page {
-  width: 95% !important;
+  width: 98% !important;
   max-width: none !important;
 }
 
@@ -58,8 +58,8 @@
   width: 500px;
   order: -1;
   margin-right: 10px;
-  border: 1px solid #e1e4e8;
-  border-radius: 3px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 
   align-self: flex-start;
   max-height: 500px;
