@@ -1,17 +1,18 @@
 {
   "name": "github-diff-explorer",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run serve",
+    "start": "npm run build:dev:watch",
     "build:dev": "webpack --config webpack.dev.js",
+    "build:dev:watch": "webpack --config webpack.dev.js --watch",
     "build:prod": "webpack --config webpack.prod.js",
     "release": "npm run build:prod && ./pack-release.sh",
     "test": "jest --config ./jest.config.json",
-    "bump-version-patch": "./bump-version.sh PATCH",
-    "bump-version-minor": "./bump-version.sh MINOR",
-    "bump-version-major": "./bump-version.sh MAJOR"
+    "version:patch": "./bump-version.sh PATCH",
+    "version:minor": "./bump-version.sh MINOR",
+    "version:major": "./bump-version.sh MAJOR"
   },
   "repository": {
     "type": "git",
@@ -44,22 +45,19 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "7.0.1",
-    "@babel/preset-env": "7.0.0",
-    "babel-jest": "24.5.0",
-    "babel-loader": "8.0.2",
-    "cross-env": "5.2.0",
-    "css-loader": "2.1.1",
-    "http-server": "0.11.1",
-    "jest": "24.5.0",
-    "jest-environment-jsdom": "24.5.0",
-    "jest-environment-jsdom-global": "1.2.0",
-    "mini-css-extract-plugin": "0.5.0",
-    "request": "2.88.0",
-    "style-loader": "0.23.1",
-    "webpack": "4.5.0",
-    "webpack-cli": "3.3.0",
-    "webpack-dev-server": "3.2.1",
-    "webpack-merge": "4.2.1"
+    "@babel/core": "7.10.4",
+    "@babel/preset-env": "7.10.4",
+    "babel-jest": "26.1.0",
+    "babel-loader": "8.1.0",
+    "css-loader": "3.6.0",
+    "jest": "26.1.0",
+    "jest-environment-jsdom": "26.1.0",
+    "jest-environment-jsdom-global": "2.0.4",
+    "mini-css-extract-plugin": "0.9.0",
+    "style-loader": "1.2.1",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "4.2.2"
   }
 }

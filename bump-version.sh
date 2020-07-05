@@ -38,10 +38,14 @@ sed -i "" "s/$current_version/$new_version/g" $file_manifest
 sed -i "" "3s/$current_version/$new_version/" $file_package_json
 sed -i "" "3s/$current_version/$new_version/" $file_package_lock
 
-# Tag new version
-git tag -a $new_version -m "Version $new_version"
+###
+# Add these back at a later date and use Git Flow instead
+##
 
-# Push up branch
-git add --all
-git commit -m "Version $new_version"
-git push && git push --tags
+# # Tag new version
+# git tag -a $new_version -m "Version $new_version"
+
+# # Push up branch
+# git add --all
+# git commit -m "Version $new_version"
+# git push && git push --tags
