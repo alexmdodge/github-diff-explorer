@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
     "name": "__MSG_extName__",
-    "version": "1.0.2",
+    "version": "1.2.0",
     "default_locale": "en",
-    "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
+    "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
     "icons": {
         "16": "images/icon16.png",
         "48": "images/icon48.png",
@@ -21,7 +21,9 @@
     "author": "Alex Dodge",
     "content_scripts": [
         {
-            "matches": ["https://github.com/*/*/pull/*"],
+            "matches": [
+                "https://github.com/*/*"
+            ],
             "css": ["lib/gde_styles.css"],
             "js": ["lib/gde_script.js"],
             "run_at": "document_end"
@@ -29,9 +31,8 @@
     ],
     "offline_enabled": true,
     "permissions": [
-        "tabs",
-        "http://*.google.com/"
+        "https://github.com/"
     ],
     "short_name": "GitHub Diff Explorer",
-    "version_name": "1.0.2"
+    "version_name": "1.2.0"
   }

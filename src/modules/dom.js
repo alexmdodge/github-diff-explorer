@@ -35,6 +35,13 @@ export function generateExplorerFolderElements(explorerData) {
   return explorerFolderEl;
 }
 
+export function getLoadingElement() {
+  const el = document.createElement('div');
+  el.classList.add(styleClass.loader);
+
+  return el;
+}
+
 export function removeElementChildren(el) {
   while (el.firstChild) {
     el.removeChild(el.firstChild);
@@ -129,10 +136,70 @@ export function getExplorerContainerElement() {
   return el;
 }
 
-export function getExplorerHeaderElement() {
-  const el = document.createElement('h5');
+export function getExplorerHeaderElement(gdeContainer) {
+  const el = document.createElement('div');
   el.classList.add(styleClass.explorerHeader);
-  el.innerText = 'File Explorer';
+
+  const headerTitleElement = getExplorerHeaderTitle();
+  const headerMenuElement = getExplorerHeaderMenuElement(gdeContainer);
+
+  el.appendChild(headerTitleElement);
+  el.appendChild(headerMenuElement);
+
+  return el;
+}
+
+function getExplorerHeaderTitle() {
+  const container = document.createElement('span');
+  const logo = document.createElement('img');
+  const title = document.createElement('h5');
+
+  container.classList.add(styleClass.explorerHeaderTitleContainer);
+
+  title.classList.add(styleClass.explorerHeaderTitle);
+  title.innerText = 'File Explorer';
+
+  logo.classList.add(styleClass.explorerHeaderLogo);
+  logo.src = icons.logo;
+
+  container.appendChild(logo);
+  container.appendChild(title);
+
+  return container;
+}
+
+function getExplorerHeaderMenuElement(gdeContainer) {
+  const el = document.createElement('div');
+  el.classList.add(styleClass.explorerHeaderMenu);
+
+  const minBtn = document.createElement('span');
+  const maxBtn = document.createElement('span');
+  minBtn.classList.add(styleClass.explorerMenuButton);
+  minBtn.classList.add(styleClass.explorerActiveMenuButton);
+  maxBtn.classList.add(styleClass.explorerMenuButton);
+
+  minBtn.title = 'Minimize Explorer';
+  maxBtn.title = 'Maximize Explorer';
+
+  minBtn.innerHTML = icons.minus;
+  maxBtn.innerHTML = icons.plus;
+
+  minBtn.addEventListener('click', () => {
+    minBtn.classList.remove(styleClass.explorerActiveMenuButton);
+    maxBtn.classList.add(styleClass.explorerActiveMenuButton);
+
+    gdeContainer.classList.add(styleClass.minimizedContainer);
+  });
+
+  maxBtn.addEventListener('click', () => {
+    maxBtn.classList.remove(styleClass.explorerActiveMenuButton);
+    minBtn.classList.add(styleClass.explorerActiveMenuButton);
+
+    gdeContainer.classList.remove(styleClass.minimizedContainer);
+  });
+
+  el.appendChild(minBtn);
+  el.appendChild(maxBtn);
 
   return el;
 }

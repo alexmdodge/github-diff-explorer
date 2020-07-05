@@ -1,7 +1,7 @@
-import { gh } from './constants';
+import { gh, styleClass } from './constants';
 import { getFileElements } from './structure';
 import { isValidHrefPath, isUnifiedSplitSwitchPath } from './paths';
-import debug from './debug';
+import logger from './debug';
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Functions for handling events and polling page state do determine when
@@ -15,7 +15,7 @@ import debug from './debug';
  */
 export function onContentReady(fn) {
   const wrappedCallback = () => {
-    debug.log('[onContentRead] Page content ready');
+    logger.log('[onContentReady] Page content ready');
     fn();
   }
 
@@ -39,23 +39,34 @@ export function onContentReady(fn) {
 export function onFilesLoaded(fn) {
   const filesChangedEl = document.getElementById(gh.filesChangedId);
 
+  const fileExplorerContainerExists = !!document.querySelector(`.${styleClass.explorerContainer}`);
+  if (fileExplorerContainerExists) {
+    logger.log('[onFilesLoaded] File explorer is already built.');
+    return;
+  }
+
   if (!filesChangedEl) {
-    debug.log('[onFilesLoaded] Cannot retrieve filesChangedEl');
+    logger.log('[onFilesLoaded] Cannot retrieve filesChangedEl');
     setTimeout(onFilesLoaded.bind(this, fn), 250);
     return;
   }
 
-  const fileEls = getFileElements();
+  // Some file els can be present on the page but hidden from view when
+  // navigating from within the PR view.
+  const readyFileEls = getFileElements().filter(el => {
+    return el.clientHeight > 0 && el.clientWidth > 0
+  });
+
   const numFilesChanged = parseInt(filesChangedEl.innerText.trim(), 10);
 
-  if (fileEls.length !== numFilesChanged) {
-    debug.log('[onFilesLoaded] All files have not loaded yet');
+  if (readyFileEls.length !== numFilesChanged) {
+    logger.debug('[onFilesLoaded] All files have not loaded yet');
     setTimeout(onFilesLoaded.bind(this, fn), 250);
     return;
   }
 
-  debug.log('[onFilesLoaded] All files have loaded: ', fileEls);
-  fn(fileEls);
+  logger.log('[onFilesLoaded] All files have loaded: ', readyFileEls);
+  fn(readyFileEls);
 }
 
 /**
@@ -65,23 +76,45 @@ export function onFilesLoaded(fn) {
  * Note: The popstate events were not effective here as they
  * were firing intermittently.
  */
-export function onLocationChanged(currentHref, fn) {
+export function onLocationCheck(currentHref, fn) {
   const nextHref = window.location.href;
   const isSameLocation = nextHref === currentHref;
 
-  if (!isSameLocation && isValidHrefPath(nextHref)) {
-    debug.log('[onLocationChanged] Location changed to valid files path: ', nextHref);
+  // Navigating to the same url can reset the DOM structure, need
+  // to confirm the integrity of the explorer
+  const fileExplorerContainerExists = !!document.querySelector(`.${styleClass.explorerContainer}`);
 
-    if (isUnifiedSplitSwitchPath(nextHref)) {
-      debug.log('[onLocationChanged] Switch to diff view, deferring location change');
+  const isNavigatingToFilesChanged = !isSameLocation && isValidHrefPath(nextHref);
+  const isRefreshingFilesChanged = isSameLocation && isValidHrefPath(nextHref) &&!fileExplorerContainerExists;
 
-      setTimeout(() => {
-        fn(nextHref);
-      }, 1000);
-    } else {
-      fn(nextHref);
-    }
+  if (isNavigatingToFilesChanged) {
+    logger.log('[onLocationCheck] Location changed to valid files path: ', nextHref);
+    fn(nextHref);
+  } else if (isRefreshingFilesChanged) {
+    logger.log('[onLocationCheck] Location is the same but the explorer was cleared from DOM re-render.');
+    fn(nextHref);
   }
 
-  setTimeout(onLocationChanged.bind(this, nextHref, fn), 500);
+  // Because of the domain level we have to load the extension at, change the
+  // timeout length according to how close the user is to the pull request page
+  let timeout;
+
+  if (nextHref.indexOf('pull/') > -1) {
+    // We're at the pull request level so check frequently
+    logger.debug('[onLocationCheck] Monitoring location changes at the pull request level');
+
+    timeout = 500;
+  } else if (nextHref.indexOf('pulls') > -1) {
+    // On the pull request list page so check somewhat frequently
+    logger.debug('[onLocationCheck] Monitoring location changes at the pull request list level');
+
+    timeout = 1500;
+  } else {
+    // We're at the pull repository level so check intermittently
+    logger.debug('[onLocationCheck] Monitoring location changes at the repository level');
+
+    timeout = 3000;
+  }
+
+  setTimeout(onLocationCheck.bind(this, nextHref, fn), timeout);
 }

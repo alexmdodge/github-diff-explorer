@@ -2,14 +2,36 @@
 
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300i" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
     <title>GitHub Diff Explorer Menu</title>
     <style type="text/css">
+      html {
+        padding: 0;
+        margin: 0px 3px;
+
+        background: white;
+      }
       body {
-        margin: 10px;
+        font-family: 'Roboto Condensed', sans-serif;
+
         white-space: nowrap;
+        color: white;
+        padding: 0 15px 15px;
+        border-radius: 2.5px;
+        margin: 0;
+
+        border: 2px solid rgba(63, 41, 93, 0.9);
+        background: linear-gradient(rgba(63, 41, 93, 0.8), rgba(148, 80, 177, 0.8)); 
       }
 
       h1 {
+        font-family: 'Roboto', sans-serif;
         font-size: 15px;
       }
 
@@ -19,25 +41,114 @@
         flex-direction: column;
         justify-content: space-between;
       }
+
+      .popup__logo {
+        width: 50px;
+      }
+
+      .popup__title {
+        font-size: 24px;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      .popup__title-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      small {
+        color: rgba(240,240,240,0.5);
+      }
+
+      small div {
+        text-align: center;
+      }
+
+      a {
+        color: rgb(240, 240, 240);
+        text-decoration: none;
+      }
+      
+      a:hover {
+        color: rgb(230, 230, 230);
+      }
+
+      .popup__button {
+        padding: 5px;
+        margin: 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        border: 1px solid rgba(63, 41, 93, 0.9);
+        border-bottom: 3px solid rgba(63, 41, 93, 0.9);
+      }
+
+      .popup__button:hover {
+        background-color: rgba(235, 224, 250, 0.9);
+      }
+
+      .popup__button a {
+        color: #333;
+      }
+
+      .popup__button i {
+        color: rgba(63, 41, 93, 0.9);
+      }
+
+      .popup__actions {
+        margin: 0 0 10px;
+      }
     </style>
 
   </head>
 
   <body>
-    <h1>GitHub Diff Explorer</h1>
+    <div class="popup__title-container">
+      <img class="popup__logo" src="gde-banner.png">
+      <h1 class="popup__title">GitHub Diff Explorer</h1>
+    </div>
     <div id="container">
-      <div>
-        Please files any issues 
-        <a href="https://github.com/alexmdodge/github-diff-explorer/issues" target="_blank">
-          on GitHub
-        </a>!
+      <div class="popup__actions">
+        <button class="popup__button">
+            <i class="fas fa-exclamation-circle"></i>
+          <a href="https://github.com/alexmdodge/github-diff-explorer/issues" target="_blank">
+            File Issue
+          </a>
+        </button>
+
+        <button class="popup__button">
+            <i class="fas fa-hands-helping"></i>
+          <a href="https://github.com/alexmdodge/github-diff-explorer" target="_blank">
+            Contribute
+          </a>
+        </button>
+
+        <button class="popup__button">
+            <i class="fas fa-coffee"></i>
+          <a href="https://www.paypal.me/AlexDodge" target="_blank">
+            Coffee Time
+          </a>
+        </button>
       </div>
-      <div>
-        Icons obtained from 
-        <a href="https://fontawesome.com/license" target="_blank">
-          Font Awesome
-        </a>
-      </div>
+      
+      <small>
+        <div class="popup__shoutout">
+          Icons obtained from 
+          <a href="https://fontawesome.com/license" target="_blank">
+            Font Awesome
+          </a>.
+        </div>
+        <div class="popup__shoutout">
+          A big thanks to 
+          <a href="https://github.com/andeladenaro" target="_blank">
+            Andela Denaro 
+          </a>
+          for the logo and banner design!
+        </div>
+      </small>
     </div>
   </body>
 </html>
