@@ -1,5 +1,5 @@
 import { gh, styleClass } from './constants'
-import icons from './icons'
+import { icons } from './icons'
 import { ExplorerDataMap, MappedFileElement } from './structure'
 
 /**

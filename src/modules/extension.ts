@@ -13,7 +13,7 @@ import {
 import { extractPathDataFromElements, DecoratedFileElement, MappedFileElement, ExplorerDataMap } from './structure'
 import { getReversedPathFragments, isValidHrefPath, checkIfValidAnchor, checkIfHashContainsAnchor } from './paths'
 import { onContentReady, onFilesLoaded, onLocationCheck } from './handlers'
-import logger from './debug'
+import { logger } from './debug'
 
 /**
  * The root class which handles extension state management

@@ -1,6 +1,6 @@
-import deepExtend, { cloneSpecificValue } from '../src/modules/extend'
+import { deepExtendHtmlTerminated, cloneSpecificValue } from '../src/modules/extend'
   
-describe('deepExtend()', () => {
+describe('deepExtendHtmlTerminated', () => {
   
   it('should merge two objects with Html nodes', () => {
     const obj1 = {
@@ -46,12 +46,12 @@ describe('deepExtend()', () => {
         ]
       }
     }
-    const result = deepExtend(obj1, obj2)
+    const result = deepExtendHtmlTerminated(obj1, obj2)
     expect(result).toMatchObject(extended)
   })
 
   it('should return false if not an object', () => {
-    const result = deepExtend()
+    const result = deepExtendHtmlTerminated()
     expect(result).toStrictEqual(false)
   })
 
@@ -60,7 +60,7 @@ describe('deepExtend()', () => {
       a: 'test'
     }
       
-    const result = deepExtend(obj)
+    const result = deepExtendHtmlTerminated(obj)
     expect(result).toMatchObject(obj)
   })
 
@@ -69,7 +69,7 @@ describe('deepExtend()', () => {
       a: 'test'
     }
     
-    const result = deepExtend(obj, 'nope')
+    const result = deepExtendHtmlTerminated(obj, 'nope')
     expect(result).toMatchObject(obj)
   })
 
@@ -78,7 +78,7 @@ describe('deepExtend()', () => {
       a: 'test'
     }
       
-    const result = deepExtend(obj, { obj })
+    const result = deepExtendHtmlTerminated(obj, { obj })
     expect(result).toMatchObject(obj)
   })
 })
@@ -96,9 +96,7 @@ describe('cloneSpecificValue()', () => {
     expect(result instanceof RegExp).toStrictEqual(true)
   })
 
-  it('should throw an error for all else', () => {
-    expect(() => {
-      cloneSpecificValue('test')
-    }).toThrow()
+  it('should return null for everything else', () => {
+    expect(cloneSpecificValue('test' as any)).toStrictEqual(null)
   })
 })

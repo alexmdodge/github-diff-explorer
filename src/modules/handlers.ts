@@ -1,7 +1,7 @@
 import { gh, styleClass } from './constants'
 import { getFileElements } from './structure'
 import { isValidHrefPath } from './paths'
-import logger from './debug'
+import { logger } from './debug'
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Functions for handling events and polling page state do determine when

@@ -4,11 +4,11 @@ import {
   getFileElementContainers,
   extractFileElementsFromContainers,
   mergeFileElements,
-  filterUnusedElements
+  filterUnusedFileElements
 } from '../src/modules/structure'
 
 import { gh } from '../src/modules/constants'
-import mockSingleDiffElement from './mock-elements/mock-single-diff-element'
+import { mockedSingleWithDataProps, mockedSingleWithNoDataProps } from './mock-elements/mock-single-diff-element'
 import mockPrPage from './mock-elements/mock-pr-page'
 import { generateNodeArrayFor, generateNodeFor } from './helpers/helpers'
 
@@ -17,10 +17,10 @@ describe('Structure Module', () => {
   describe('Test - extractPathDataFromElements', () => {
 
     test('Expect node element array to return object array with extracted data', () => {
-      const testElementsArray = generateNodeArrayFor(mockSingleDiffElement, 1)
-      const expectedNode = generateNodeFor(mockSingleDiffElement)
-      const expectedPath = expectedNode.children[0].dataset.path
-      const expectedAnchor = expectedNode.children[0].dataset.anchor
+      const testElementsArray = generateNodeArrayFor(mockedSingleWithDataProps, 1)
+      const expectedNode = generateNodeFor(mockedSingleWithDataProps)
+      const expectedPath = (expectedNode.children[0] as HTMLElement).dataset.path
+      const expectedAnchor = (expectedNode.children[0] as HTMLElement).dataset.anchor
 
       const result = extractPathDataFromElements(testElementsArray)
       expect(result[0].el).toEqual(expectedNode)
@@ -28,8 +28,16 @@ describe('Structure Module', () => {
       expect(result[0].anchor).toEqual(expectedAnchor)
     })
 
+    test('Expect node element without data to return empty path and anchor props', () => {
+      const testElementsArray = generateNodeArrayFor(mockedSingleWithNoDataProps, 1)
+
+      const result = extractPathDataFromElements(testElementsArray)
+      expect(result[0].path).toEqual('')
+      expect(result[0].anchor).toEqual('')
+    })
+
     test('Empty array returns itself', () => {
-      const testArray = []
+      const testArray: HTMLElement[] = []
       const result = extractFileElementsFromContainers(testArray)
       expect(result).toEqual(testArray)
     })
@@ -58,7 +66,7 @@ describe('Structure Module', () => {
   })
 
   describe('Test - extractFileElementsFromContainers', () => {
-    let arrayOfDiffContainers = []
+    let arrayOfDiffContainers: HTMLElement[] = []
     
     const emptyTestArrays = () => {
       arrayOfDiffContainers = []
@@ -95,7 +103,7 @@ describe('Structure Module', () => {
 
   describe('Test - mergeFileElements', () => {
     let arrayOfDiffContainers = []
-    let arrayOfArraysOfDiffElements = []
+    let arrayOfArraysOfDiffElements: HTMLElement[][] = []
 
     const emptyTestArrays = () => {
       arrayOfDiffContainers = []
@@ -132,10 +140,10 @@ describe('Structure Module', () => {
     })
   })
 
-  describe('Test - filterUnusedElements', () => {
-    let arrayOfDiffContainers
-    let arrayOfArraysOfDiffElements
-    let flattenedArrayOfElements
+  describe('Test - filterUnusedFileElements', () => {
+    let arrayOfDiffContainers: HTMLElement[] = []
+    let arrayOfArraysOfDiffElements = []
+    let flattenedArrayOfElements: HTMLElement[] = []
 
     const emptyTestArrays = () => {
       arrayOfDiffContainers = []
@@ -157,18 +165,18 @@ describe('Structure Module', () => {
     })
 
     test('Returns an array', () => {
-      const result = filterUnusedElements(flattenedArrayOfElements)
+      const result = filterUnusedFileElements(flattenedArrayOfElements)
       const isArray = Array.isArray(result)
       expect(isArray).toBeTruthy()
     })
 
     test('Returns array with 4 filtered entries', () => {
-      const result = filterUnusedElements(flattenedArrayOfElements)
+      const result = filterUnusedFileElements(flattenedArrayOfElements)
       expect(result.length).toEqual(4)
     })
 
     test('First entry is an element with a class matching filter', () => {
-      const result = filterUnusedElements(flattenedArrayOfElements)
+      const result = filterUnusedFileElements(flattenedArrayOfElements)
       const firstEntry = result[0]
       const hasFileClass = firstEntry.classList.contains(gh.fileClass)
       

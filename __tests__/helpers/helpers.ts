@@ -8,7 +8,7 @@ export function generateNodeArrayFor(htmlString: string, length: number): any[] 
   return result
 }
 
-export function generateNodeFor(htmlString: string): ChildNode {
+export function generateNodeFor(htmlString: string): HTMLElement {
   const div = document.createElement('div')
   div.innerHTML = htmlString.trim()
   const child = div.firstChild
@@ -17,7 +17,7 @@ export function generateNodeFor(htmlString: string): ChildNode {
     throw new Error('First child does not exist')
   } else {
     // Change this to div.childNodes to support multiple top-level nodes
-    return child
+    return child as HTMLElement
   }
   
 }

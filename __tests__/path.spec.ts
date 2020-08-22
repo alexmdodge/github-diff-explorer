@@ -5,7 +5,9 @@ import {
   isValidHrefPath,
   checkIfValidAnchor,
   checkIfHashContainsAnchor
-} from '../src/modules/paths.js'
+} from '../src/modules/paths'
+
+declare let jsdom: any
 
 describe('Path Module', () => {
 
@@ -31,7 +33,7 @@ describe('Path Module', () => {
     })
     
     test('Null or falsy path returns a single empty array', () => {
-      const reversedFragments = getReversedPathFragments(null)
+      const reversedFragments = getReversedPathFragments(null as any)
       expect(reversedFragments).toEqual(expectedTestPathResult.empty)
     })
   })
@@ -52,7 +54,7 @@ describe('Path Module', () => {
     })
     
     test('Null params should not match', () => {
-      const isMatched = matchFinalPathFragmentWithPattern(null, null)
+      const isMatched = matchFinalPathFragmentWithPattern(null as any, null as any)
       expect(isMatched).toBeFalsy()
     })
   })
@@ -72,7 +74,7 @@ describe('Path Module', () => {
     })
     
     test('Falsy path should not match', () => {
-      const result = isUnifiedSplitSwitchPath(null)
+      const result = isUnifiedSplitSwitchPath(null as any)
       expect(result).toBeFalsy()
     })
   })
@@ -98,7 +100,7 @@ describe('Path Module', () => {
     })
     
     test('Null path should not match', () => {
-      const result = isValidHrefPath(null)
+      const result = isValidHrefPath(null as any)
       expect(result).toBeFalsy()
     })
   })
