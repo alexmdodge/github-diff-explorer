@@ -1,38 +1,38 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This is a forked version of the deepExtend library provided by,
+/**
+ * This is an extend based off of the version of the deepExtend library provided by,
  * https://github.com/unclechu/node-deep-extend
  * 
  * Note this is modified under the MIT license.
  * 
  * Specifically the method was modified to terminate recursive dives whenever
  * an HTMLElement is matched.
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ */
 
-export function isSpecificValue(val) {
-  return (
-    val instanceof Date ||
-      val instanceof RegExp ||
-      val instanceof HTMLElement
-  ) ? true : false
+export function isSpecificValue(val: Date | RegExp | HTMLElement): boolean {
+  return val instanceof Date
+    || val instanceof RegExp
+    || val instanceof HTMLElement
 }
 
-export function cloneSpecificValue(val) {
+export function cloneSpecificValue(val: Date | RegExp | HTMLElement): Date | RegExp | HTMLElement | null {
   if (val instanceof Date) {
     return new Date(val.getTime())
   } else if (val instanceof RegExp) {
     return new RegExp(val)
   } else if (val instanceof HTMLElement) {
+    // Note we're specifically terminating here and leaving the HTML elements intact
+    // so we can continue to reference those correctly
     return val
   } else {
-    throw new Error('Unexpected situation')
+    return null
   }
 }
 
 /**
 * Recursive cloning array.
 */
-function deepCloneArray(arr) {
-  const clone = []
+function deepCloneArray(arr: any[]) {
+  const clone: any[] = []
   arr.forEach(function (item, index) {
     if (typeof item === 'object' && item !== null) {
       if (Array.isArray(item)) {
@@ -40,7 +40,7 @@ function deepCloneArray(arr) {
       } else if (isSpecificValue(item)) {
         clone[index] = cloneSpecificValue(item)
       } else {
-        clone[index] = deepExtend({}, item)
+        clone[index] = deepExtendHtmlTerminated({}, item)
       }
     } else {
       clone[index] = item
@@ -58,19 +58,16 @@ function deepCloneArray(arr) {
 * object as first argument, like this:
 *   deepExtend({}, yourObj_1, [yourObj_N]);
 */
-export default function deepExtend() {
-  if (arguments.length < 1 || typeof arguments[0] !== 'object') {
+export function deepExtendHtmlTerminated(...args: any[]): any {
+  if (args.length < 1 || typeof args[0] !== 'object') {
     return false
   }
 
-  if (arguments.length < 2) {
-    return arguments[0]
+  if (args.length < 2) {
+    return args[0]
   }
 
-  const target = arguments[0]
-
-  // convert arguments to array and cut off target object
-  const args = Array.prototype.slice.call(arguments, 1)
+  const target = args[0]
 
   let val, src
 
@@ -89,9 +86,9 @@ export default function deepExtend() {
         return
 
         /**
-               * if new value isn't object then just overwrite by new value
-               * instead of extending.
-               */
+         * if new value isn't object then just overwrite by new value
+         * instead of extending.
+         */
       } else if (typeof val !== 'object' || val === null) {
         target[key] = val
         return
@@ -108,12 +105,12 @@ export default function deepExtend() {
 
         // overwrite by new value if source isn't object or array
       } else if (typeof src !== 'object' || src === null || Array.isArray(src)) {
-        target[key] = deepExtend({}, val)
+        target[key] = deepExtendHtmlTerminated({}, val)
         return
 
         // source value and new value is objects both, extending...
       } else {
-        target[key] = deepExtend(src, val)
+        target[key] = deepExtendHtmlTerminated(src, val)
         return
       }
     })
