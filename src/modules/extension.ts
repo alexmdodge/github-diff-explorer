@@ -13,7 +13,7 @@ import {
 import { extractPathDataFromElements, DecoratedFileElement, MappedFileElement, ExplorerDataMap } from './structure'
 import { getReversedPathFragments, isValidHrefPath, checkIfValidAnchor, checkIfHashContainsAnchor } from './paths'
 import { onContentReady, onFilesLoaded, onLocationCheck } from './handlers'
-import { logger } from './debug'
+import { Logger } from './logger'
 
 /**
  * The root class which handles extension state management
@@ -95,7 +95,7 @@ export class Extension {
     // test toggling the explorer on and off
 
     if (!this._isExplorerParsing) {
-      logger.log('[handleLocationChanged] Location changed, setting content ready')
+      Logger.log('[handleLocationChanged] Location changed, setting content ready')
       onContentReady().then(() => this.handleContentReady())
     }
   }
@@ -112,7 +112,7 @@ export class Extension {
     onFilesLoaded()
       .then(files => this.handleFilesLoaded(files))
       .catch(error => {
-        logger.error(error)
+        Logger.error(error)
       })
   }
 
@@ -158,15 +158,15 @@ export class Extension {
     const filesContainerEl = getFilesContainerElement()
     addEachFileToContainer(this._fileEls, filesContainerEl)
 
-    logger.log('[buildFileExplorer] Explorer container prepared: ', explorerContainerEl)
-    logger.log('[buildFileExplorer] Files container prepared: ', filesContainerEl)
-    logger.log('[buildFileExplorer] Appending files to viewer wrapper: ', diffViewerEl)
+    Logger.log('[buildFileExplorer] Explorer container prepared: ', explorerContainerEl)
+    Logger.log('[buildFileExplorer] Files container prepared: ', filesContainerEl)
+    Logger.log('[buildFileExplorer] Appending files to viewer wrapper: ', diffViewerEl)
 
     diffViewerEl.appendChild(explorerContainerEl)
     diffViewerEl.appendChild(filesContainerEl)
 
     setTimeout(() => {
-      logger.log('[buildFileExplorer] File explorer is complete: ', diffViewerEl)
+      Logger.log('[buildFileExplorer] File explorer is complete: ', diffViewerEl)
       this._isExplorerParsing = false
 
       // clearTimeout(loadingTimeout);
@@ -176,11 +176,11 @@ export class Extension {
 
   parseFileExplorerData(): void {
     const decoratedFileEls = extractPathDataFromElements(this._fileEls)
-    logger.log('[parseFileExplorerData] Decorated file elements: ', decoratedFileEls)
+    Logger.log('[parseFileExplorerData] Decorated file elements: ', decoratedFileEls)
 
     const mappedFileEls = this.addDecoratedFileEventListeners(decoratedFileEls)
     this._mappedFileEls = mappedFileEls
-    logger.log('[parseFileExplorerData] Mapped file elements: ', mappedFileEls)
+    Logger.log('[parseFileExplorerData] Mapped file elements: ', mappedFileEls)
 
     // Here we're going to iterate through the path and nest
     // the mapped file at the same place where it's nested
@@ -199,7 +199,7 @@ export class Extension {
     }) 
       
     this._explorerData = deepExtendHtmlTerminated({}, ...nestedPathData)
-    logger.log('[parseFileExplorerData] Path data nested as object: ', mappedFileEls)
+    Logger.log('[parseFileExplorerData] Path data nested as object: ', mappedFileEls)
   }
 
   addDecoratedFileEventListeners(files: DecoratedFileElement[]): MappedFileElement[] {
@@ -224,7 +224,17 @@ export class Extension {
       mappedFile.rootFileHeaderEl.addEventListener('click', (event: Event) => {
         const target = event.target as (HTMLElement | null)
         if (target?.classList.contains('js-reviewed-checkbox')) {
+
+          // Pre-emptive update to ensure we switch the state from whatever
+          // it was previously
+          mappedFile.isViewed = !mappedFile.isViewed
           this.updateViewedFileStatus(mappedFile)
+
+          setTimeout(() => {
+            // Follow up with a check to ensure the state is correct
+            mappedFile.isViewed = this.isViewedFile(mappedFile.rootFileHeaderEl)
+            this.updateViewedFileStatus(mappedFile)
+          }, 500)
         }
       })
 
@@ -270,7 +280,7 @@ export class Extension {
   }
 
   updateViewedFileStatus(file: MappedFileElement): void {
-    file.isViewed = this.isViewedFile(file.rootFileEl)
+    Logger.log('[updateViewedFileStatus] Updating files viewed status: ', file)
 
     if (file.isViewed) {
       file.explorerFileEl.classList.add(styleClass.viewedExplorer)
@@ -279,10 +289,14 @@ export class Extension {
     }
   }
 
-  isViewedFile(file: HTMLElement): boolean {
-    const rootFileHeader = file.children[0] as HTMLElement
-    const rootFileHeaderViewedCheckbox = rootFileHeader.getElementsByClassName('js-reviewed-checkbox')[0] as HTMLElement
+  isViewedFile(fileHeader: HTMLElement): boolean {
+    const rootFileHeaderViewedCheckbox = fileHeader.getElementsByClassName('js-reviewed-checkbox')[0] as HTMLElement
+
+    Logger.log('[isViewedFile] Checking checkbox value: ', rootFileHeaderViewedCheckbox)
+
     const isViewedStatus = rootFileHeaderViewedCheckbox.getAttribute('data-ga-click')
+
+    Logger.log('[isViewedFile] Checking viewed status: ', isViewedStatus)
 
     return isViewedStatus?.includes('true') ?? false
   }

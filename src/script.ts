@@ -1,14 +1,12 @@
 import { Extension } from './modules/extension'
 import { isDev } from './modules/env'
-import logger from './modules/debug'
+import { Logger } from './modules/logger'
 import './styles.css'
-
-declare let global: any
 
 /**
  * Extension Initialization
  * 
- * This extension uses a common abbreviation to represent the
+ * This extension uses an abbreviation to represent the
  * extension's classes and other useful data properties.
  * 
  * GDE - GitHub Diff Explorer
@@ -17,7 +15,13 @@ const gdeExtension = new Extension()
 gdeExtension.init()
 
 if (isDev) {
-  global.GDE_EXTENSION_INSTANCE = gdeExtension
+  // Note that Chrome extensions can't modify or access
+  // properties from the global object directly (makes sense),
+  // so to aid with debugging we'll need to incorporate query
+  // params and interval logging of the top level extension.
+  setInterval(() => {
+    Logger.debug('[GDE Global] Extension state snapshot: ', gdeExtension)
+  }, 5000)
 }
 
-logger.log('GitHub Diff Explorer initialized in Development Mode')
+Logger.log('[GDE Global] GitHub Diff Explorer initialized in Development Mode')

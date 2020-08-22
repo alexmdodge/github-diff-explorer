@@ -1,7 +1,7 @@
 import { gh, styleClass } from './constants'
 import { getFileElements } from './structure'
 import { isValidHrefPath } from './paths'
-import { logger } from './debug'
+import { Logger } from './logger'
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Functions for handling events and polling page state do determine when
@@ -16,7 +16,7 @@ import { logger } from './debug'
 export function onContentReady(): Promise<boolean> {
   return new Promise((resolve) => {
     const logAndResolve = () => {
-      logger.log('[onContentReady] Page content ready')
+      Logger.log('[onContentReady] Page content ready')
       resolve()
     }
 
@@ -50,13 +50,13 @@ export function onFilesLoaded(): Promise<HTMLElement[]> {
 
         const fileExplorerContainerExists = !!document.querySelector(`.${styleClass.explorerContainer}`)
         if (fileExplorerContainerExists) {
-          logger.log('[onFilesLoaded] File explorer is already built.')
+          Logger.log('[onFilesLoaded] File explorer is already built.')
           reject('File explorer already exists')
           return
         }
     
         if (!filesChangedEl) {
-          logger.log('[onFilesLoaded] Cannot retrieve filesChangedEl')
+          Logger.log('[onFilesLoaded] Cannot retrieve filesChangedEl')
           resolve(checkLoadedFilesAfter(DEFAULT_INTERNAL_POLL_RATE))
           return
         }
@@ -70,7 +70,7 @@ export function onFilesLoaded(): Promise<HTMLElement[]> {
         const numFilesChanged = parseInt(filesChangedEl.innerText.trim(), 10)
     
         if (readyFileEls.length !== numFilesChanged) {
-          logger.debug('[onFilesLoaded] All files have not loaded yet')
+          Logger.debug('[onFilesLoaded] All files have not loaded yet')
           resolve(checkLoadedFilesAfter(DEFAULT_INTERNAL_POLL_RATE))
           return
         }
@@ -78,7 +78,7 @@ export function onFilesLoaded(): Promise<HTMLElement[]> {
         // TODO: Provide progressive loading of files elements as they become available
         // Probably something more suited for an observable
     
-        logger.log('[onFilesLoaded] All files have loaded: ', readyFileEls)
+        Logger.log('[onFilesLoaded] All files have loaded: ', readyFileEls)
         resolve(readyFileEls)
       }, timeout)
     })
@@ -109,10 +109,10 @@ export function onLocationCheck(currentHref: string): Promise<string> {
         const isRefreshingFilesChanged = isSameLocation && isValidHrefPath(nextHref) && !fileExplorerContainerExists
       
         if (isNavigatingToFilesChanged) {
-          logger.log('[onLocationCheck] Location changed to valid files path: ', nextHref)
+          Logger.log('[onLocationCheck] Location changed to valid files path: ', nextHref)
           resolve(nextHref)
         } else if (isRefreshingFilesChanged) {
-          logger.log('[onLocationCheck] Location is the same but the explorer was cleared from DOM re-render.')
+          Logger.log('[onLocationCheck] Location is the same but the explorer was cleared from DOM re-render.')
           resolve(nextHref)
         }
       
@@ -122,17 +122,17 @@ export function onLocationCheck(currentHref: string): Promise<string> {
       
         if (nextHref.indexOf('pull/') > -1) {
           // We're at the pull request level so check frequently
-          logger.debug('[onLocationCheck] Monitoring location changes at the pull request level')
+          Logger.debug('[onLocationCheck] Monitoring location changes at the pull request level')
       
           nextPollRate = 500
         } else if (nextHref.indexOf('pulls') > -1) {
           // On the pull request list page so check somewhat frequently
-          logger.debug('[onLocationCheck] Monitoring location changes at the pull request list level')
+          Logger.debug('[onLocationCheck] Monitoring location changes at the pull request list level')
       
           nextPollRate = 1500
         } else {
           // We're at the pull repository level so check intermittently
-          logger.debug('[onLocationCheck] Monitoring location changes at the repository level')
+          Logger.debug('[onLocationCheck] Monitoring location changes at the repository level')
       
           nextPollRate = 3000
         }
