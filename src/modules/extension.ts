@@ -218,6 +218,7 @@ export class Extension {
       }
 
       // Set first pass data for viewed file element
+      mappedFile.isViewed = this.isViewedFile(mappedFile.rootFileHeaderEl)
       this.updateViewedFileStatus(mappedFile)
 
       // Set listener for future viewed file changes
