@@ -3,7 +3,7 @@ export const gh = {
   fileWrapperClass: 'js-diff-progressive-container',
   explorerContainerClass: 'diff-view',
   pageContainerClass: 'new-discussion-timeline',
-  filesChangedId: 'files_tab_counter',
+  filesChangedId: 'files_tab_counter'
 }
 
 /* Extension specific classes */
@@ -34,5 +34,5 @@ export const styleClass = {
   fileDiff: 'gde__file',  
   explorerFolderContainer: 'gde__nested-files',
   explorerFolderTopContainer: 'gde__nested-files-container',
-  closedFolder: 'gde__folder-closed',
+  closedFolder: 'gde__folder-closed'
 }

@@ -1,8 +1,9 @@
 #!/bin/bash
 
-output="github-diff-explorer"
+output="gde-$1"
 output_file="$output.zip"
-input="extension"
+input="extension/$1"
+target="extension"
 
 # Remove the zip file if already in the directory
 if [ -f $output_file ]; then
@@ -20,3 +21,6 @@ zip -r $output_file $output
 
 # Clean up the temptorary output dir
 rm -R $output
+
+# Move the file into the extensions directory
+mv $output_file $target

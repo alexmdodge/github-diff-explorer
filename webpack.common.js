@@ -1,7 +1,11 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { name, paths } = require('./package.json').config;
+
+let browserBasedOutput = `${paths.output}`.replace(/<BROWSER>/, 'chrome')
+if (process.env.GDE_BUILD) {
+  browserBasedOutput = `${paths.output}`.replace(/<BROWSER>/, process.env.GDE_BUILD)
+}
 
 module.exports = {
   entry: {
@@ -9,16 +13,16 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(__dirname, paths.output),
+    path: path.resolve(__dirname, browserBasedOutput),
     filename: '[name].js',
   },
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /(node_modules)/,
-        use: 'babel-loader',
+        use: 'ts-loader',
       },
       {
         test: /\.css$/,
@@ -43,11 +47,6 @@ module.exports = {
   ],
 
   resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src')
-    ],
-
-    extensions: ['.js', '.json', '.css'],
+    extensions: ['.js', '.ts', '.json', '.css'],
   },
 }
