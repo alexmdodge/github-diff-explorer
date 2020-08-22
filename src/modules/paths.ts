@@ -11,7 +11,7 @@ export function isValidHrefPath(path) {
     /files/,
     /[a-z0-9]{40}/
   ]
-  return matchFinalPathFragmentWithPattern(path, fragmentPatterns);
+  return matchFinalPathFragmentWithPattern(path, fragmentPatterns)
 }
 
 /**
@@ -19,7 +19,7 @@ export function isValidHrefPath(path) {
  * view has been requested.
  */
 export function isUnifiedSplitSwitchPath(path) {
-  return matchFinalPathFragmentWithPattern(path, /diff=/);
+  return matchFinalPathFragmentWithPattern(path, /diff=/)
 }
 
 /**
@@ -28,18 +28,18 @@ export function isUnifiedSplitSwitchPath(path) {
  */
 export function matchFinalPathFragmentWithPattern(path, patterns) {
   if (!path || !patterns) {
-    return false;
+    return false
   }
 
   if (!Array.isArray(patterns)) {
-    patterns = [patterns];
+    patterns = [patterns]
   }
   
-  const pathFragments = path.split('/');
-  const finalFragment = pathFragments[pathFragments.length - 1];
-  const matchedPatterns = patterns.filter(pattern => pattern.test(finalFragment));
+  const pathFragments = path.split('/')
+  const finalFragment = pathFragments[pathFragments.length - 1]
+  const matchedPatterns = patterns.filter(pattern => pattern.test(finalFragment))
 
-  return matchedPatterns.length > 0;
+  return matchedPatterns.length > 0
 }
 
 /**
@@ -47,13 +47,13 @@ export function matchFinalPathFragmentWithPattern(path, patterns) {
  */
 export function getReversedPathFragments(path) {
   if (!path) {
-    return [''];
+    return ['']
   }
   
-  const fragments = path.split('/');
-  fragments.reverse();
+  const fragments = path.split('/')
+  fragments.reverse()
 
-  return fragments;
+  return fragments
 }
 
 /** 
@@ -61,9 +61,9 @@ export function getReversedPathFragments(path) {
  * diff anchor data format.
  */
 export function checkIfValidAnchor() {
-  const anchorFormat = 'diff-';
+  const anchorFormat = 'diff-'
 
-  return checkIfHashContainsAnchor(anchorFormat);
+  return checkIfHashContainsAnchor(anchorFormat)
 }
 
 /**
@@ -73,12 +73,12 @@ export function checkIfValidAnchor() {
  * @export
  */
 export function checkIfHashContainsAnchor(anchor) {
-  const currentHash = window.location.hash;
+  const currentHash = window.location.hash
 
   if (currentHash != null 
     && currentHash.indexOf(anchor) > -1) {
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }

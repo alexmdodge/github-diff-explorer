@@ -1,0 +1,316 @@
+/* TODO: Change px to rem */
+
+.diffbar-item.toc-select.select-menu.js-menu-container.js-select-menu {
+  display: none;
+}
+
+/*
+ * The top level container which features both the explorer and the
+ * file diffs.
+ */
+.gde {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+/*
+ * This is the class added to the pull request page which extends the
+ * view to stretch the full width of the display
+ */
+.gde__page {
+  width: 98% !important;
+  max-width: none !important;
+}
+
+/*
+ * The file diff container
+ */
+.gde__files {
+  flex: 1 1 0;
+  align-self: flex-start;
+  min-width: 300px;
+}
+
+/*
+ * We initially hide each individual file, which is then revealed once
+ * selected from the menu
+ */
+.gde__file {
+  display: none;
+}
+
+.gde__file--active {
+  display: block;
+}
+
+.gde > .gde__files > .gde__file--active {
+  margin: 0;
+}
+
+/*
+ * The file explorer container which re-orders the view so
+ * the menu is always on the left
+ */
+.gde__container {
+  background-color: '#fafbfc';
+  width: 500px;
+  order: -1;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+  align-self: flex-start;
+  max-height: 500px;
+  min-width: 100px;
+  overflow-y: scroll;
+  resize: horizontal;
+}
+
+.gde__container--minimized {
+  width: 70px !important;
+  overflow-y: hidden;
+  resize: none;
+  min-width: 70px;
+  height: 43px;
+}
+
+/*
+ * The header element which contains the explorer controls and title
+ */
+.gde__header {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: #FAFBFC;
+  border-bottom: 1px solid #e1e4e8;
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 43px;
+  padding: 8px 10px;
+}
+
+.gde__header-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gde__header-title {
+  padding-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.gde__header-logo {
+  width: 16px;
+}
+
+.gde__folder-header-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.gde__menu-btn {
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  padding: 5px;
+}
+
+.gde__menu-btn > svg {
+  width: 12px;
+  fill: #333;
+}
+
+.gde__menu-btn:hover > svg {
+  fill: #0366d6;
+}
+
+.gde__menu-btn:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.gde_menu-btn--active {
+  display: flex;
+}
+
+/*
+ * A class placed on each file directory which helps clear up
+ * organization
+ */
+.gde__nested-files-container {
+  padding: 10px 5px;
+  overflow-x: hidden;
+}
+
+.gde__nested-files-container > .gde__nested-files {
+  padding-left: 5px;
+}
+
+.gde__nested-files {
+  padding-left: 23px;
+  list-style: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.gde__nested-files > * {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+/*
+ * The style which controls the title of a directory which contains
+ * files and other directories within it
+ */
+.gde__folder-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  user-select: none;
+  padding: 1px 0;
+}
+
+.gde__folder-header:hover > span > svg {
+  fill: rgba(0,0,0,0.75);
+}
+
+/*
+ * This represents the actual file or end of each file tree in
+ * the explorer
+ */
+.gde__item {
+  cursor: pointer;
+  user-select: none;
+  color: #444;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.gde__item:hover {
+  color: #333;
+}
+
+.gde__item:hover > .gde__file-icon > svg {
+  fill: rgba(0,0,0,0.5);
+}
+
+.gde__item--active {
+  font-weight: bold;
+  color: #4cce66;
+}
+
+.gde__item--active > .gde__file-icon > svg {
+  fill: #4cce66;
+}
+
+.gde__item--active:hover > .gde__file-icon > svg {
+  fill: #36BC53;
+}
+
+.gde__item--active:hover {
+  color: #36BC53;
+}
+
+.gde__item--viewed {
+  text-decoration: line-through;
+}
+
+.gde__folder-closed + .gde__nested-files {
+  display: none;
+}
+
+/*
+ * Icon styles
+ */
+.gde__icon {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
+}
+
+.gde__icon > svg {
+  width: 14px;
+  fill: rgba(0,0,0,0.15);
+}
+
+.gde__file-icon > svg {
+  height: 14px;
+}
+
+.gde__caret-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 3px;
+}
+
+.gde__caret-icon > svg {
+  width: 12px;
+  height: 12px;
+  fill: rgba(0,0,0,0.15);
+}
+
+.gde__loader,
+.gde__loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.gde__loader {
+  top: 30vh;
+  margin: 60px auto;
+  font-size: 10px;
+  position: fixed;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(0,0,0, 0.2);
+  border-right: 1.1em solid rgba(0,0,0, 0.2);
+  border-bottom: 1.1em solid rgba(0,0,0, 0.2);
+  border-left: 1.1em solid #000000;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load 1.1s infinite linear;
+  animation: load 1.1s infinite linear;
+}
+
+@-webkit-keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+

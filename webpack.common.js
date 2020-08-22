@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { name, paths } = require('./package.json').config;
 
@@ -16,9 +15,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /(node_modules)/,
-        use: 'babel-loader',
+        use: 'ts-loader',
       },
       {
         test: /\.css$/,
@@ -43,11 +42,6 @@ module.exports = {
   ],
 
   resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src')
-    ],
-
-    extensions: ['.js', '.json', '.css'],
+    extensions: ['.js', '.ts', '.json', '.css'],
   },
 }

@@ -1,4 +1,4 @@
-import { gh } from './constants';
+import { gh } from './constants'
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Functions for handling data parsing related to the structure of the
@@ -14,9 +14,9 @@ export function extractPathDataFromElements(elements) {
     return {
       path: el.children[0].dataset.path,
       anchor: el.children[0].dataset.anchor,
-      el: el,
-    };
-  });
+      el: el
+    }
+  })
 }
 
 /**
@@ -24,12 +24,12 @@ export function extractPathDataFromElements(elements) {
  * returns a consistent structure with all of the currently available files.
  */
 export function getFileElements() {
-  const fileElContainers = getFileElementContainers();
-  const splitFileEls = extractFileElementsFromContainers(fileElContainers);
-  const mergedFileElements = mergeFileElements(splitFileEls);
-  const fileEls = filterUnusedElements(mergedFileElements);
+  const fileElContainers = getFileElementContainers()
+  const splitFileEls = extractFileElementsFromContainers(fileElContainers)
+  const mergedFileElements = mergeFileElements(splitFileEls)
+  const fileEls = filterUnusedElements(mergedFileElements)
 
-  return fileEls;
+  return fileEls
 }
 
 /**
@@ -39,7 +39,7 @@ export function getFileElements() {
  * a node list to an array.
  */
 export function getFileElementContainers() {
-  return [...document.querySelectorAll(`.${gh.fileWrapperClass}`)];
+  return [...document.querySelectorAll(`.${gh.fileWrapperClass}`)]
 }
 
 /**
@@ -48,7 +48,7 @@ export function getFileElementContainers() {
  */
 export function extractFileElementsFromContainers(containers) {
   return containers.map(container => {
-    return [...container.children];
+    return [...container.children]
   })
 }
 
@@ -56,7 +56,7 @@ export function extractFileElementsFromContainers(containers) {
  * Takes an array of arrays and flattens it up to a depth of one.
  */
 export function mergeFileElements(nestedFiles) {
-  return [].concat(...nestedFiles);
+  return [].concat(...nestedFiles)
 }
 
 /**
@@ -64,5 +64,5 @@ export function mergeFileElements(nestedFiles) {
  * of the elements probably exist for metadata purposes.
  */
 export function filterUnusedElements(elements) {
-  return elements.filter(el => el.classList.contains(gh.fileClass));
+  return elements.filter(el => el.classList.contains(gh.fileClass))
 }
