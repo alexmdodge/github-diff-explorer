@@ -1,9 +1,14 @@
 import { Extension } from './modules/extension'
 import logger from './modules/debug'
-import { GDEGlobalData } from './types/global'
 import './styles.css'
 
 declare let global: any
+
+export interface GDEGlobalData {
+  filesEls: any,
+  activeFileEl: any,
+  activeExplorerEl: any
+}
 
 // TODO: Expose these to the window on dev
 const GDE_GLOBALS: GDEGlobalData = {

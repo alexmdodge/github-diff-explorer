@@ -6,7 +6,7 @@
  * Tests the input path for meaningful strings which associate
  * with the 'Files Changed' tab.
  */
-export function isValidHrefPath(path) {
+export function isValidHrefPath(path: string): boolean {
   const fragmentPatterns = [
     /files/,
     /[a-z0-9]{40}/
@@ -18,7 +18,7 @@ export function isValidHrefPath(path) {
  * Tests the input path to determine if the unified vs split diff
  * view has been requested.
  */
-export function isUnifiedSplitSwitchPath(path) {
+export function isUnifiedSplitSwitchPath(path: string): boolean {
   return matchFinalPathFragmentWithPattern(path, /diff=/)
 }
 
@@ -26,13 +26,13 @@ export function isUnifiedSplitSwitchPath(path) {
  * Using a path determine the final fragment and test if it contains
  * any of the given patterns.
  */
-export function matchFinalPathFragmentWithPattern(path, patterns) {
+export function matchFinalPathFragmentWithPattern(path: string, patterns: RegExp[] | RegExp): boolean {
   if (!path || !patterns) {
     return false
   }
 
   if (!Array.isArray(patterns)) {
-    patterns = [patterns]
+    patterns = [ patterns ]
   }
   
   const pathFragments = path.split('/')
@@ -45,7 +45,7 @@ export function matchFinalPathFragmentWithPattern(path, patterns) {
 /**
  * Generate a reversed path fragment array from an input path string
  */
-export function getReversedPathFragments(path) {
+export function getReversedPathFragments(path: string): string[] {
   if (!path) {
     return ['']
   }
@@ -60,7 +60,7 @@ export function getReversedPathFragments(path) {
  * Processes the current urls anchor hash and checks if it matches the
  * diff anchor data format.
  */
-export function checkIfValidAnchor() {
+export function checkIfValidAnchor(): boolean {
   const anchorFormat = 'diff-'
 
   return checkIfHashContainsAnchor(anchorFormat)
@@ -72,11 +72,13 @@ export function checkIfValidAnchor() {
  * 
  * @export
  */
-export function checkIfHashContainsAnchor(anchor) {
+export function checkIfHashContainsAnchor(anchor: string): boolean {
   const currentHash = window.location.hash
 
   if (currentHash != null 
-    && currentHash.indexOf(anchor) > -1) {
+    && currentHash.indexOf(anchor) > -1
+  ) {
+    // Explicitly returning booleans here for clarity and future modifications
     return true
   }
 
