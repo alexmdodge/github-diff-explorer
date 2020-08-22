@@ -1,16 +1,24 @@
 import { gh, styleClass } from './constants'
 import icons from './icons'
+import { ExplorerDataMap, MappedFileElement } from './structure'
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/**
  * Functions for handling DOM structure generation, data properties, and
  * class additions.
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ */
+function isMappedFile(entry: ExplorerDataMap | MappedFileElement): entry is MappedFileElement {
+  const possibleMappedFile = (entry as MappedFileElement)
+  return typeof possibleMappedFile.name === 'string'
+    && typeof possibleMappedFile.rootFileEl === 'object'
+    && typeof possibleMappedFile.isViewed === 'boolean'
+}
+
 
 /**
  * Generates a nested list DOM structure based on the nested object passed 
  * to the function.
  */
-export function generateExplorerFolderElements(explorerData) {
+export function generateExplorerFolderElements(explorerData: ExplorerDataMap): HTMLUListElement {
   const currentFolderDataKeys = Object.keys(explorerData)
   const explorerFolderEl = getExplorerFolderElement()
 
@@ -18,10 +26,10 @@ export function generateExplorerFolderElements(explorerData) {
     const nestedFolderEl = getNestedFolderElement()
     const currentFileData = explorerData[folderKey]
 
-    if (currentFileData.explorerItemEl) {
+    if (isMappedFile(currentFileData)) {
       // If the explorer item element exists then we've
       // reached the end of the branch.
-      nestedFolderEl.appendChild(currentFileData.explorerItemEl)
+      nestedFolderEl.appendChild(currentFileData.explorerFileEl)
     } else {
       // If not create a folder header and continue to nest elements
       const folderDescriptor = getFolderDescriptorElementWithName(folderKey)
@@ -35,14 +43,14 @@ export function generateExplorerFolderElements(explorerData) {
   return explorerFolderEl
 }
 
-export function getLoadingElement() {
+export function getLoadingElement(): HTMLDivElement {
   const el = document.createElement('div')
   el.classList.add(styleClass.loader)
 
   return el
 }
 
-export function removeElementChildren(el) {
+export function removeElementChildren(el: HTMLElement): HTMLElement {
   while (el.firstChild) {
     el.removeChild(el.firstChild)
   }
@@ -50,20 +58,20 @@ export function removeElementChildren(el) {
   return el
 }
 
-export function prepareEmptyDiffViewerElement() {
-  const el = document.querySelector(`.${gh.explorerContainerClass}`)
+export function prepareEmptyDiffViewerElement(): HTMLElement {
+  const el = document.querySelector(`.${gh.explorerContainerClass}`) as HTMLElement
   el.classList.add(styleClass.root)
 
   const emptyEl = removeElementChildren(el)
   return emptyEl
 }
 
-export function setupPageStructure() {
-  const issuesListContainer = document.querySelector(`.${gh.pageContainerClass}`)
+export function setupPageStructure(): void {
+  const issuesListContainer = document.querySelector(`.${gh.pageContainerClass}`) as HTMLElement
   issuesListContainer.classList.add(styleClass.pageContainer)
 }
 
-export function addEachFileToContainer(els, container) {
+export function addEachFileToContainer(els: HTMLElement[], container: HTMLElement): void {
   els.forEach(el => {
     el.classList.add(styleClass.fileDiff)
     container.appendChild(el)
@@ -72,20 +80,20 @@ export function addEachFileToContainer(els, container) {
 
 /* DOM Creation */
 
-export function getExplorerFolderElement() {
+export function getExplorerFolderElement(): HTMLUListElement {
   const el = document.createElement('ul')
   el.classList.add(styleClass.explorerFolderContainer)
 
   return el
 }
 
-export function getNestedFolderElement() {
+export function getNestedFolderElement(): HTMLLIElement {
   const el = document.createElement('li')
 
   return el
 }
 
-export function getFolderDescriptorElementWithName(name) {
+export function getFolderDescriptorElementWithName(name: string): HTMLSpanElement {
   const el = document.createElement('span')
   el.classList.add(styleClass.explorerFolderHeader)
   el.innerHTML = `
@@ -98,7 +106,7 @@ export function getFolderDescriptorElementWithName(name) {
     ${name}
   `
 
-  el.addEventListener('click', (event) => {
+  el.addEventListener('click', () => {
     const isClosed = el.classList.contains(styleClass.closedFolder)
 
     if (isClosed) {
@@ -129,14 +137,14 @@ export function getFolderDescriptorElementWithName(name) {
   return el
 }
 
-export function getExplorerContainerElement() {
+export function getExplorerContainerElement(): HTMLDivElement {
   const el = document.createElement('div')
   el.classList.add(styleClass.explorerContainer)
 
   return el
 }
 
-export function getExplorerHeaderElement(gdeContainer) {
+export function getExplorerHeaderElement(gdeContainer: HTMLElement): HTMLDivElement {
   const el = document.createElement('div')
   el.classList.add(styleClass.explorerHeader)
 
@@ -149,7 +157,7 @@ export function getExplorerHeaderElement(gdeContainer) {
   return el
 }
 
-function getExplorerHeaderTitle() {
+function getExplorerHeaderTitle(): HTMLSpanElement {
   const container = document.createElement('span')
   const logo = document.createElement('img')
   const title = document.createElement('h5')
@@ -168,7 +176,7 @@ function getExplorerHeaderTitle() {
   return container
 }
 
-function getExplorerHeaderMenuElement(gdeContainer) {
+function getExplorerHeaderMenuElement(gdeContainer: HTMLElement): HTMLDivElement {
   const el = document.createElement('div')
   el.classList.add(styleClass.explorerHeaderMenu)
 
@@ -204,7 +212,7 @@ function getExplorerHeaderMenuElement(gdeContainer) {
   return el
 }
 
-export function getFilesContainerElement() {
+export function getFilesContainerElement(): HTMLDivElement {
   const el = document.createElement('div')
   el.classList.add(gh.fileWrapperClass)
   el.classList.add(styleClass.fileDiffContainer)
@@ -212,7 +220,7 @@ export function getFilesContainerElement() {
   return el
 }
 
-export function getExplorerItemElementWithName(name) {
+export function getExplorerItemElementWithName(name: string): HTMLSpanElement {
   const el = document.createElement('span')
   el.classList.add(styleClass.explorerItem)
   el.innerHTML = `

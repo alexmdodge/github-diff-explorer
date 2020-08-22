@@ -7,12 +7,17 @@ import { isDev } from './env'
 const logger = {
   log(msg: string, ...args: any[]): void {
     if (isDev) {
-      console.log(msg, args)
+      console.log(msg, ...args)
     }
   },
   debug(msg: string, ...args: any[]): void {
     if (isDev) {
-      console.debug(msg, args)
+      console.debug(msg, ...args)
+    }
+  },
+  error(msg: string, ...args: any[]): void {
+    if (isDev) {
+      console.error(msg, ...args)
     }
   }
 }
