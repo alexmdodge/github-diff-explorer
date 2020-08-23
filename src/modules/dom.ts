@@ -93,44 +93,39 @@ export function getNestedFolderElement(): HTMLLIElement {
   return el
 }
 
+function updateFolderIcons(el: HTMLSpanElement, caretIcon: HTMLElement, folderIcon: HTMLElement, name: string) {
+  const caretIconEl = document.createElement('span')
+  caretIconEl.classList.add(styleClass.caretIcon)
+  caretIconEl.appendChild(caretIcon)
+
+  const fileIconEl = document.createElement('span')
+  fileIconEl.classList.add(styleClass.icon)
+  fileIconEl.appendChild(folderIcon)
+
+  const nameEl = document.createElement('span')
+  nameEl.innerText = name
+
+  const clearedEl = removeElementChildren(el)
+  clearedEl.appendChild(caretIconEl)
+  clearedEl.appendChild(fileIconEl)
+  clearedEl.appendChild(nameEl)
+}
+
 export function getFolderDescriptorElementWithName(name: string): HTMLSpanElement {
   const el = document.createElement('span')
   el.classList.add(styleClass.explorerFolderHeader)
-  el.innerHTML = `
-    <span class="${styleClass.caretIcon}">
-      ${icons.caretDown}
-    </span>
-    <span class="${styleClass.icon}">
-      ${icons.folderOpen}
-    </span>
-    ${name}
-  `
+
+  updateFolderIcons(el, icons.caretDown(), icons.folderOpen(), name)
 
   el.addEventListener('click', () => {
     const isClosed = el.classList.contains(styleClass.closedFolder)
 
     if (isClosed) {
       el.classList.remove(styleClass.closedFolder)
-      el.innerHTML = `
-        <span class="${styleClass.caretIcon}">
-          ${icons.caretDown}
-        </span>
-        <span class="${styleClass.icon}">
-          ${icons.folderOpen}
-        </span>
-        ${name}
-      `
+      updateFolderIcons(el, icons.caretDown(), icons.folderOpen(), name)
     } else {
       el.classList.add(styleClass.closedFolder)
-      el.innerHTML = `
-        <span class="${styleClass.caretIcon}">
-          ${icons.caretRight}
-        </span>
-        <span class="${styleClass.icon}">
-          ${icons.folderClosed}
-        </span>
-        ${name}
-      `
+      updateFolderIcons(el, icons.caretRight(), icons.folderClosed(), name)
     }
   })
 
@@ -189,8 +184,8 @@ function getExplorerHeaderMenuElement(gdeContainer: HTMLElement): HTMLDivElement
   minBtn.title = 'Minimize Explorer'
   maxBtn.title = 'Maximize Explorer'
 
-  minBtn.innerHTML = icons.minus
-  maxBtn.innerHTML = icons.plus
+  minBtn.appendChild(icons.minus())
+  maxBtn.appendChild(icons.plus())
 
   minBtn.addEventListener('click', () => {
     minBtn.classList.remove(styleClass.explorerActiveMenuButton)
@@ -223,14 +218,18 @@ export function getFilesContainerElement(): HTMLDivElement {
 export function getExplorerItemElementWithName(name: string): HTMLSpanElement {
   const el = document.createElement('span')
   el.classList.add(styleClass.explorerItem)
-  el.innerHTML = `
-    <span class="${styleClass.icon} ${styleClass.fileIcon}">
-      ${icons.file}
-    </span>
-    <span>
-      ${name}
-    </span>
-  `
+
+  let innerFileEl = document.createElement('span')
+  innerFileEl.classList.add(styleClass.icon, styleClass.fileIcon)
+  innerFileEl = removeElementChildren(innerFileEl)
+  innerFileEl.appendChild(icons.file())
+  
+  const nameEl = document.createElement('span')
+  nameEl.innerText = name
+
+  const clearedEl = removeElementChildren(el)
+  clearedEl.appendChild(innerFileEl)
+  clearedEl.appendChild(nameEl)
 
   return el
 }

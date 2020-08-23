@@ -3,8 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { name, paths } = require('./package.json').config;
 
 let browserBasedOutput = `${paths.output}`.replace(/<BROWSER>/, 'chrome')
-if (process.env.GDE_BUILD) {
-  browserBasedOutput = `${paths.output}`.replace(/<BROWSER>/, process.env.GDE_BUILD)
+if (process.env.GDE_BROWSER) {
+  browserBasedOutput = `${paths.output}`.replace(/<BROWSER>/, process.env.GDE_BROWSER)
 }
 
 module.exports = {

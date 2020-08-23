@@ -2,7 +2,9 @@ node_modules
 .vscode
 coverage
 extension
+dist
 site
 webpack.*
 tsconfig.json
 .eslintrc.js
+scripts

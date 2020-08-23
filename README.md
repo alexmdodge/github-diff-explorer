@@ -1,6 +1,6 @@
 <img src="https://i.imgur.com/kthxYY7.pngg" width="900px">
 
-The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.
+The GitHub Diff Explorer is a browser extension which generates a seamless file explorer with a minimalist focus. Available in both Chrome and Firefox for GitHub.
 
 A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo and banner design!
 
@@ -14,15 +14,27 @@ A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo an
 
 ## Install
 
-Install the full extension [here](https://chrome.google.com/webstore/detail/github-diff-explorer/kagcmhcnjehpeihgmcohmdceffihkglk)
+This extension requires:
 
-To install it as a dev extension,
+* Node (>v8)
+* NPM (>v5)
+
+To test this locally in Chrome:
 
 * Pull this repository locally
-* `npm install && npm run build:prod`
+* `npm install`
+* `npm start` will run a local development copy, un-minified, with logging enabled
 * Navigate to `chrome://extensions/`
 * Enable developer mode
-* Load unpacked extension
-* Navigate to the directory and select the extension folder as the root
+* Load unpacked extension from `dist/chrome`
 * Go to a GitHub `Files Changed` tab in any repo.
 * Enjoy!
+
+## Release
+
+To build a full released version for both Chrome and Firefox:
+
+* `npm install`
+* `npm run release`
+
+Deployed `.zip` files and production assets will be deployed to `dist/chrome` and `dist/firefox` respectively.
