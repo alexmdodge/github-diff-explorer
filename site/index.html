@@ -120,12 +120,20 @@
         </ul>
 
         <div class="description__install-container">
-          <button class="install__button" onMouseOver={onInstallHover}>
-            <a class="link--button"
-              href="https://chrome.google.com/webstore/detail/github-diff-explorer/kagcmhcnjehpeihgmcohmdceffihkglk">
-              Install Now
-            </a>
-          </button>
+          <div class="install-button__container">
+            <button class="install__button" onMouseOver={onInstallHover}>
+              <a class="link--button"
+                href="https://chrome.google.com/webstore/detail/github-diff-explorer/kagcmhcnjehpeihgmcohmdceffihkglk">
+                Install Chrome
+              </a>
+            </button>
+            <button class="install__button" onMouseOver={onInstallHover}>
+              <a class="link--button"
+                href="https://addons.mozilla.org/en-GB/firefox/addon/github-diff-explorer/">
+                Install Firefox
+              </a>
+            </button>
+          </div>
           <div class="install__overlay"></div>
           <img src="assets/sample.png" class="description__screenshot" alt="GitHub Diff Explorer Screenshot" />
         </div>
