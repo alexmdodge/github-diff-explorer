@@ -1,6 +1,6 @@
-<img src="https://i.imgur.com/kthxYY7.pngg" width="900px">
+<img src="https://i.imgur.com/kthxYY7.png" width="900px">
 
-The GitHub Diff Explorer is a browser extension which generates a seamless file explorer with a minimalist focus. Available in both Chrome and Firefox for GitHub.
+The GitHub Diff Explorer is a minimalist browser add-on which generates a seamless file explorer in GitHub pull requests. Currently the add-on is available in both Chrome and Firefox.
 
 A big thanks to [Andela Denaro](https://github.com/andeladenaro) for the logo and banner design!
 
@@ -37,4 +37,4 @@ To build a full released version for both Chrome and Firefox:
 * `npm install`
 * `npm run release`
 
-Deployed `.zip` files and production assets will be deployed to `dist/chrome` and `dist/firefox` respectively.
+Bundled `.zip` files and production assets will be in `dist/chrome` and `dist/firefox` respectively.

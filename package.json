@@ -25,9 +25,9 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
 
-    "version:patch": "VERSION_TYPE=PATCH node ./scripts/ext-bump-version.js",
-    "version:minor": "VERSION_TYPE=MINOR node ./scripts/ext-bump-version.js",
-    "version:major": "VERSION_TYPE=MAJOR node ./scripts/ext-bump-version.js",
+    "version:bump:patch": "VERSION_TYPE=PATCH node ./scripts/ext-bump-version.js",
+    "version:bump:minor": "VERSION_TYPE=MINOR node ./scripts/ext-bump-version.js",
+    "version:bump:major": "VERSION_TYPE=MAJOR node ./scripts/ext-bump-version.js",
     "version:explicit": "node ./scripts/ext-bump-version.js"
   },
   "repository": {
@@ -72,7 +72,7 @@
     "jest-environment-jsdom": "26.3.0",
     "jest-environment-jsdom-global": "2.0.4",
     "mini-css-extract-plugin": "0.10.0",
-    "style-loader": "1.2.1",
+    "style-loader": "2.0.0",
     "ts-jest": "26.2.0",
     "ts-loader": "8.0.2",
     "typescript": "4.0.2",

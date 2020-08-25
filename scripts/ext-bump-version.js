@@ -1,5 +1,6 @@
 const rootPackage = require('../package.json')
-const { version } = require('webpack')
+const path = require('path')
+const fs = require('fs-extra')
 
 /**
  * Helper utilities for paths and file replacement
@@ -33,8 +34,10 @@ function replaceInFile(source, replaceWith, filePath) {
 // Get the current version
 const currentVersion = rootPackage.version
 
-// Break the version into fragments
-const versionFragments = currentVersion.split('.')
+// Break the version into fragments and convert the fragments to numbers
+let versionFragments = currentVersion
+  .split('.')
+  .map(frag => parseInt(frag, 10))
 
 // Determine versioning type and increment the corresponding fragment
 // Also reset any version which is less than the version provided.
@@ -56,7 +59,9 @@ switch(process.env.VERSION_TYPE) {
     break
 
   default:
-    versionFragments = process.argv[1].split('.')
+    versionFragments = process.argv[2]
+      .split('.')
+      .map(frag => parseInt(frag, 10))
 
     if (versionFragments.length < 3) {
       throw new Error('No version type was detected, and no direct version was passed in')
