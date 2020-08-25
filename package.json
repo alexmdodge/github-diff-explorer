@@ -1,18 +1,28 @@
 {
   "name": "github-diff-explorer",
-  "version": "1.2.0",
-  "description": "An extension which modifies the github diff viewer to instead use a file explorer similar to that of BitBucket and Stash.",
+  "version": "1.2.2",
+  "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build:dev:watch",
+    "start": "npm run build:ext:chrome && npm run build:dev:watch",
+    "test": "jest",
     "build:dev": "webpack --config webpack.dev.js",
     "build:dev:watch": "webpack --config webpack.dev.js --watch",
-    "build:prod": "webpack --config webpack.prod.js",
-    "release": "npm run build:prod && ./pack-release.sh",
-    "test": "jest --config ./jest.config.json",
-    "version:patch": "./bump-version.sh PATCH",
-    "version:minor": "./bump-version.sh MINOR",
-    "version:major": "./bump-version.sh MAJOR"
+    "build:ext:chrome": "GDE_BROWSER=chrome node ./scripts/ext-generate.js",
+    "build:ext:firefox": "GDE_BROWSER=firefox node ./scripts/ext-generate.js",
+    "build:prod:chrome": "GDE_BROWSER=chrome webpack --config webpack.prod.js",
+    "build:prod:firefox": "GDE_BROWSER=firefox webpack --config webpack.prod.js",
+    "release": "npm run release:chrome && npm run release:firefox",
+    "release:chrome": "npm run build:ext:chrome && npm run build:prod:chrome && npm run pack:chrome",
+    "release:firefox": "npm run build:ext:firefox && npm run build:prod:firefox && npm run pack:firefox",
+    "pack:chrome": "GDE_BROWSER=chrome node ./scripts/ext-pack.js",
+    "pack:firefox": "GDE_BROWSER=firefox node ./scripts/ext-pack.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "version:bump:patch": "VERSION_TYPE=PATCH node ./scripts/ext-bump-version.js",
+    "version:bump:minor": "VERSION_TYPE=MINOR node ./scripts/ext-bump-version.js",
+    "version:bump:major": "VERSION_TYPE=MAJOR node ./scripts/ext-bump-version.js",
+    "version:explicit": "node ./scripts/ext-bump-version.js"
   },
   "repository": {
     "type": "git",
@@ -34,30 +44,34 @@
   "homepage": "https://github.com/alexmdodge/github-diff-explorer#readme",
   "config": {
     "name": {
+      "extension": "GitHub Diff Explorer",
       "script": "gde_script",
       "style": "gde_styles"
     },
     "paths": {
-      "entry": "./src/script.js",
-      "vendor": "./src/vendor.js",
-      "output": "./extension/lib"
+      "entry": "./src/script.ts",
+      "output": "./dist/<BROWSER>/lib"
     }
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "babel-jest": "26.1.0",
-    "babel-loader": "8.1.0",
+    "@types/jest": "26.0.10",
+    "@typescript-eslint/eslint-plugin": "3.9.1",
+    "@typescript-eslint/parser": "3.9.1",
     "css-loader": "3.6.0",
-    "jest": "26.1.0",
-    "jest-environment-jsdom": "26.1.0",
+    "eslint": "7.7.0",
+    "execa": "4.0.3",
+    "fs-extra": "9.0.1",
+    "jest": "26.4.2",
+    "jest-environment-jsdom": "26.3.0",
     "jest-environment-jsdom-global": "2.0.4",
-    "mini-css-extract-plugin": "0.9.0",
-    "style-loader": "1.2.1",
-    "webpack": "4.43.0",
+    "mini-css-extract-plugin": "0.10.0",
+    "style-loader": "1.2.2",
+    "ts-jest": "26.2.0",
+    "ts-loader": "8.0.2",
+    "typescript": "4.0.2",
+    "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.11.0",
-    "webpack-merge": "4.2.2"
+    "webpack-merge": "5.1.2"
   }
 }

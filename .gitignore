@@ -22,8 +22,8 @@ node_modules
 # Output of 'npm pack'
 *.tgz
 
-extension/lib
-extension.crx
-extension.pem
+extension-dist
 
 *.zip
+
+dist
