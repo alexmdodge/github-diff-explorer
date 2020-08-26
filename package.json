@@ -1,6 +1,6 @@
 {
   "name": "github-diff-explorer",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
   "main": "index.js",
   "scripts": {
