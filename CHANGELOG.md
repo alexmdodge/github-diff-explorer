@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 1.2.3
+
+### Fix
+
+* style-loader package was missing on installation
+
+### Feature
+  
+* None
+
+### General
+
+* None
+
 ## 1.2.2
 
 ### Fix
