@@ -22,7 +22,7 @@ fs.removeSync(path.join(packedDir, outputFileZippedName))
 process.chdir(targetDir)
 
 ;(async () => {
-  await execa('zip', ['-r', `../${outputFileZippedName}`, `.`])
+  await execa('zip', ['-r', `../${outputFileZippedName}`, `.`, '-x', '.DS_Store'])
 })()
 
 // Move the file into the extensions directory
