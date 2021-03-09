@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 1.3.0
+
+### Fix
+
+* None
+
+### Feature
+  
+* #70 - Support for Dark Mode
+* #63 - Support for Unchecked Annotations
+
+### General
+
+* Dependency bumps
+
 ## 1.2.3
 
 ### Fix
