@@ -17,7 +17,7 @@ export function onContentReady(): Promise<boolean> {
   return new Promise((resolve) => {
     const logAndResolve = () => {
       Logger.log('[onContentReady] Page content ready')
-      resolve()
+      resolve(true)
     }
 
     // Only add a ready state listener if the content is
@@ -34,21 +34,30 @@ export function onContentReady(): Promise<boolean> {
   })
 }
 
+export interface FileLoadedData {
+  coreFileEls: HTMLElement[],
+  uncheckedAnnotations: HTMLElement[]
+}
+
 /**
  * Poll the current page to determine when all of the file diffs
  * have loaded. The parsed file elements are returned in the promise.
  * If certain aspects are not yet available, or additional elements are
  * loading, a delayed promise poll will continue.
  */
-export function onFilesLoaded(): Promise<HTMLElement[]> {
+export function onFilesLoaded(): Promise<FileLoadedData> {
   const checkLoadedFilesAfter = (timeout = 0) => {
-    return new Promise<HTMLElement[]>((resolve, reject) => {
+    return new Promise<FileLoadedData>((resolve, reject) => {
       const DEFAULT_INTERNAL_POLL_RATE = 250
+
+      Logger.log('[onFilesLoaded] Polling for loaded files at frequency of: ', timeout)
 
       setTimeout(() => {
         const filesChangedEl = document.getElementById(gh.filesChangedId)
 
         const fileExplorerContainerExists = !!document.querySelector(`.${styleClass.explorerContainer}`)
+
+        Logger.log('[onFilesLoaded] File explorer already exists')
         if (fileExplorerContainerExists) {
           Logger.log('[onFilesLoaded] File explorer is already built.')
           reject('File explorer already exists')
@@ -63,14 +72,15 @@ export function onFilesLoaded(): Promise<HTMLElement[]> {
 
         // Some file els can be present on the page but hidden from view when
         // navigating from within the PR view.
-        const readyFileEls = getFileElements().filter(el => {
+        const { core: coreFileEls, unchecked: uncheckedAnnotations } = getFileElements()
+        const readyFileEls = coreFileEls.filter(el => {
           return el.clientHeight > 0 && el.clientWidth > 0
         })
     
         const numFilesChanged = parseInt(filesChangedEl.innerText.trim(), 10)
     
-        if (readyFileEls.length !== numFilesChanged) {
-          Logger.debug('[onFilesLoaded] All files have not loaded yet')
+        if (readyFileEls.length < numFilesChanged) {
+          Logger.log(`[onFilesLoaded] All files have not loaded yet: ${readyFileEls.length} of ${numFilesChanged}`)
           resolve(checkLoadedFilesAfter(DEFAULT_INTERNAL_POLL_RATE))
           return
         }
@@ -79,7 +89,10 @@ export function onFilesLoaded(): Promise<HTMLElement[]> {
         // Probably something more suited for an observable
     
         Logger.log('[onFilesLoaded] All files have loaded: ', readyFileEls)
-        resolve(readyFileEls)
+        resolve({
+          coreFileEls: readyFileEls,
+          uncheckedAnnotations
+        })
       }, timeout)
     })
   }
