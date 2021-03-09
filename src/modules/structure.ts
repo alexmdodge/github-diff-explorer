@@ -58,13 +58,13 @@ export function extractPathDataFromElements(elements: HTMLElement[]): DecoratedF
  * Traverses the container which holds each of the file diffs and
  * returns a consistent structure with all of the currently available files.
  */
-export function getFileElements(): HTMLElement[] {
+export function getFileElements(): { core: HTMLElement[], unchecked: HTMLElement[] } {
   const fileElContainers = getFileElementContainers()
   const splitFileEls = extractFileElementsFromContainers(fileElContainers)
   const mergedFileElements = mergeFileElements(splitFileEls)
-  const fileEls = filterUnusedFileElements(mergedFileElements)
+  const { core, unchecked } = filterUnusedFileElements(mergedFileElements)
 
-  return fileEls
+  return { core, unchecked }
 }
 
 function unwrapToIterable(nonIterable: HTMLCollection | NodeListOf<Element>): HTMLElement[] {
@@ -108,9 +108,27 @@ export function mergeFileElements(nestedFiles: HTMLElement[][]): HTMLElement[] {
 /**
  * Only return the elements that are actually the file diffs. Some
  * of the elements probably exist for metadata purposes.
+ * 
+ * Other newer files are also unchanged annotations that can also
+ * surface.
+ * 
+ * TODO: In the future filter these unused elements into other groups
+ * and ensure they're also surfaced so they can be viewed.
  */
-export function filterUnusedFileElements(elements: HTMLElement[]): HTMLElement[] {
-  return elements.filter(el => el.classList.contains(gh.fileClass))
+export function filterUnusedFileElements(elements: HTMLElement[]): { core: HTMLElement[], unchecked: HTMLElement[] } {
+  const unchecked: HTMLElement[] = []
+  const core = elements.filter(el => {
+    if (el.classList.contains(gh.fileClass)) {
+      if (el.classList.contains(gh.fileClassTargetableEl)) {
+        return true
+      } else {
+        unchecked.push(el)
+        return false
+      }
+    }
+  })
+
+  return { core, unchecked }
 }
 
 // TODO: Check the container list to determine what Git notification file structures

@@ -1,5 +1,5 @@
 import { deepExtendHtmlTerminated } from './extend'
-import { styleClass } from './constants'
+import { mapPageColorTheme, PageColorTheme, styleClass } from './constants'
 import {
   generateExplorerFolderElements,
   getExplorerContainerElement,
@@ -8,11 +8,12 @@ import {
   getFilesContainerElement,
   addEachFileToContainer,
   prepareEmptyDiffViewerElement,
-  setupPageStructure
+  setupPageStructure,
+  getAnnotationsContainerElement
 } from './dom'
 import { extractPathDataFromElements, DecoratedFileElement, MappedFileElement, ExplorerDataMap } from './structure'
 import { getReversedPathFragments, isValidHrefPath, checkIfValidAnchor, checkIfHashContainsAnchor } from './paths'
-import { onContentReady, onFilesLoaded, onLocationCheck } from './handlers'
+import { FileLoadedData, onContentReady, onFilesLoaded, onLocationCheck } from './handlers'
 import { Logger } from './logger'
 
 /**
@@ -21,6 +22,7 @@ import { Logger } from './logger'
  */
 export class Extension {
   private _fileEls: HTMLElement[] = []
+  private _uncheckedAnnotations: HTMLElement[] = []
   private _mappedFileEls: MappedFileElement[] = []
   private _loadingEl: HTMLElement | null
   private _activeFileEl: HTMLElement | null
@@ -120,8 +122,9 @@ export class Extension {
    * All diffs have loaded and the explorer can now be constructed
    * @param _fileEls
    */
-  handleFilesLoaded(_fileEls: HTMLElement[]): void {
-    this._fileEls = _fileEls
+  handleFilesLoaded({ coreFileEls, uncheckedAnnotations }: FileLoadedData): void {
+    this._uncheckedAnnotations = uncheckedAnnotations
+    this._fileEls = coreFileEls
 
     setupPageStructure()
     this.buildFileExplorer()
@@ -132,13 +135,22 @@ export class Extension {
    * from the content.
    */
   buildFileExplorer(): void {
-    this.parseFileExplorerData()
+    // Get dark mode setting, and pass down as required
+    // NOTE: This could be done more elegantly by decorating
+    // the data after the fact
+    const rootHtmlNode = document.getElementsByTagName('html')[0]
+    const colorMode = mapPageColorTheme(rootHtmlNode.dataset.colorMode)
+
+    Logger.debug('[buildFileExplorer] Checking dark mode: ', rootHtmlNode)
+    Logger.debug('[buildFileExplorer] Checking dark mode: ', colorMode)
+
+    this.parseFileExplorerData(colorMode)
 
     // The explorer element is the file explorer located
     // to the left of the viewer.
-    const explorerContainerEl = getExplorerContainerElement()
-    const explorerHeaderEl = getExplorerHeaderElement(explorerContainerEl)
-    const nestedFolderEl = generateExplorerFolderElements(this._explorerData)
+    const explorerContainerEl = getExplorerContainerElement(colorMode)
+    const explorerHeaderEl = getExplorerHeaderElement(explorerContainerEl, colorMode)
+    const nestedFolderEl = generateExplorerFolderElements(this._explorerData, colorMode)
 
     const nestedFolderElContainer = document.createElement('div')
     nestedFolderElContainer.classList.add(styleClass.explorerFolderTopContainer)
@@ -158,12 +170,17 @@ export class Extension {
     const filesContainerEl = getFilesContainerElement()
     addEachFileToContainer(this._fileEls, filesContainerEl)
 
+    // TODO: Temporary override to pull in any unchecked annotations
+    // and add them to the end of the new explorer
+    const annotationsContainerEl = getAnnotationsContainerElement(this._uncheckedAnnotations)
+
     Logger.log('[buildFileExplorer] Explorer container prepared: ', explorerContainerEl)
     Logger.log('[buildFileExplorer] Files container prepared: ', filesContainerEl)
     Logger.log('[buildFileExplorer] Appending files to viewer wrapper: ', diffViewerEl)
 
     diffViewerEl.appendChild(explorerContainerEl)
     diffViewerEl.appendChild(filesContainerEl)
+    diffViewerEl.appendChild(annotationsContainerEl)
 
     setTimeout(() => {
       Logger.log('[buildFileExplorer] File explorer is complete: ', diffViewerEl)
@@ -174,11 +191,11 @@ export class Extension {
     }, 0)
   }
 
-  parseFileExplorerData(): void {
+  parseFileExplorerData(colorMode: PageColorTheme): void {
     const decoratedFileEls = extractPathDataFromElements(this._fileEls)
     Logger.log('[parseFileExplorerData] Decorated file elements: ', decoratedFileEls)
 
-    const mappedFileEls = this.addDecoratedFileEventListeners(decoratedFileEls)
+    const mappedFileEls = this.addDecoratedFileEventListeners(decoratedFileEls, colorMode)
     this._mappedFileEls = mappedFileEls
     Logger.log('[parseFileExplorerData] Mapped file elements: ', mappedFileEls)
 
@@ -202,7 +219,7 @@ export class Extension {
     Logger.log('[parseFileExplorerData] Path data nested as object: ', mappedFileEls)
   }
 
-  addDecoratedFileEventListeners(files: DecoratedFileElement[]): MappedFileElement[] {
+  addDecoratedFileEventListeners(files: DecoratedFileElement[], colorMode: PageColorTheme): MappedFileElement[] {
     return files.map<MappedFileElement>((file, index) => {
       const filePathFragments = getReversedPathFragments(file.path)
       const fileName = filePathFragments[0]
@@ -214,7 +231,7 @@ export class Extension {
         isViewed: false,
         rootFileEl: file.el,
         rootFileHeaderEl: file.el.children[0] as HTMLElement,
-        explorerFileEl: getExplorerItemElementWithName(fileName)
+        explorerFileEl: getExplorerItemElementWithName(fileName, colorMode)
       }
 
       // Set first pass data for viewed file element
