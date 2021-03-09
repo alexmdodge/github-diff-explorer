@@ -165,18 +165,18 @@ describe('Structure Module', () => {
     })
 
     test('Returns an array', () => {
-      const result = filterUnusedFileElements(flattenedArrayOfElements)
+      const { core: result } = filterUnusedFileElements(flattenedArrayOfElements)
       const isArray = Array.isArray(result)
       expect(isArray).toBeTruthy()
     })
 
     test('Returns array with 4 filtered entries', () => {
-      const result = filterUnusedFileElements(flattenedArrayOfElements)
+      const { core: result } = filterUnusedFileElements(flattenedArrayOfElements)
       expect(result.length).toEqual(4)
     })
 
     test('First entry is an element with a class matching filter', () => {
-      const result = filterUnusedFileElements(flattenedArrayOfElements)
+      const { core: result } = filterUnusedFileElements(flattenedArrayOfElements)
       const firstEntry = result[0]
       const hasFileClass = firstEntry.classList.contains(gh.fileClass)
       
@@ -190,18 +190,18 @@ describe('Structure Module', () => {
     })
 
     test('Returns an array', () => {
-      const result = getFileElements()
+      const { core: result } = getFileElements()
       const isArray = Array.isArray(result)
       expect(isArray).toBeTruthy()
     })
 
     test('Returns array with 4 filtered entries', () => {
-      const result = getFileElements()
+      const { core: result } = getFileElements()
       expect(result.length).toEqual(4)
     })
 
     test('First entry is an element with a class matching filter', () => {
-      const result = getFileElements()
+      const { core: result } = getFileElements()
       const firstEntry = result[0]
       const hasFileClass = firstEntry.classList.contains(gh.fileClass)
       

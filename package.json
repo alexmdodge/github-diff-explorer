@@ -1,6 +1,6 @@
 {
   "name": "github-diff-explorer",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "The GitHub Diff Explorer is a Chrome extension which generates a seamless file explorer with a minimalist focus.",
   "main": "index.js",
   "scripts": {
@@ -55,23 +55,23 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "26.0.10",
+    "@types/jest": "26.0.20",
     "@typescript-eslint/eslint-plugin": "3.9.1",
     "@typescript-eslint/parser": "3.9.1",
-    "css-loader": "3.6.0",
+    "css-loader": "5.1.1",
     "eslint": "7.7.0",
     "execa": "4.0.3",
     "fs-extra": "9.0.1",
-    "jest": "26.4.2",
-    "jest-environment-jsdom": "26.3.0",
+    "jest": "26.6.3",
+    "jest-environment-jsdom": "26.6.2",
     "jest-environment-jsdom-global": "2.0.4",
-    "mini-css-extract-plugin": "0.10.0",
+    "mini-css-extract-plugin": "1.3.9",
     "style-loader": "1.2.1",
-    "ts-jest": "26.2.0",
-    "ts-loader": "8.0.2",
-    "typescript": "4.0.2",
-    "webpack": "4.44.1",
-    "webpack-cli": "3.3.12",
-    "webpack-merge": "5.1.2"
+    "ts-jest": "26.5.3",
+    "ts-loader": "8.0.17",
+    "typescript": "4.2.2",
+    "webpack": "5.24.3",
+    "webpack-cli": "4.5.0",
+    "webpack-merge": "5.7.3"
   }
 }
